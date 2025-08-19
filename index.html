@@ -226,7 +226,7 @@
         let cardActive = 3;
         
         function loadCardShow(){
-            cardItems[cardActive].style.transform = `none`;
+            cardItems[cardActive].style.transform = `translate(-50%, -50%)`;
             cardItems[cardActive].style.zIndex = 1;
             cardItems[cardActive].style.filter = 'none';
             cardItems[cardActive].style.opacity = 1;
@@ -235,7 +235,7 @@
             let stt = 0;
             for(var i = cardActive + 1; i < cardItems.length; i++){
                 stt++;
-                cardItems[i].style.transform = `translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
+                cardItems[i].style.transform = `translate(-50%, -50%) translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
                 cardItems[i].style.zIndex = -stt;
                 cardItems[i].style.filter = 'blur(5px)';
                 cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
@@ -244,7 +244,7 @@
             stt = 0;
             for(var i = (cardActive - 1); i >= 0; i--){
                 stt++;
-                cardItems[i].style.transform = `translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
+                cardItems[i].style.transform = `translate(-50%, -50%) translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
                 cardItems[i].style.zIndex = -stt;
                 cardItems[i].style.filter = 'blur(5px)';
                 cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;

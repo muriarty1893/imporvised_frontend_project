@@ -604,16 +604,19 @@ html {
 
 /* Card Slider Styles */
 .card-slider-wrapper {
-    margin: 60px 0;
+    margin: 60px auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    position: relative;
 }
 
 .card-slider {
     position: relative;
-    margin-top: 50px;
+    margin: 0 auto;
     width: 100%;
+    max-width: 1000px;
     height: 370px;
     overflow: hidden;
     display: flex;
@@ -632,8 +635,9 @@ html {
     border-radius: 15px;
     padding: 25px;
     transition: 0.5s;
-    left: calc(50% - 140px);
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     color: #fff;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
@@ -647,6 +651,7 @@ html {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-align: center;
 }
 
 .card-item p, .card-item {
@@ -698,12 +703,15 @@ html {
 @media screen and (max-width: 768px) {
     .card-slider {
         height: 320px;
+        margin: 0 auto;
     }
     
     .card-item {
         width: 240px;
         height: 280px;
-        left: calc(50% - 120px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         padding: 20px;
     }
     
@@ -729,13 +737,15 @@ html {
 @media screen and (max-width: 480px) {
     .card-slider {
         height: 280px;
-        margin-top: 30px;
+        margin: 0 auto;
     }
     
     .card-item {
         width: 200px;
         height: 240px;
-        left: calc(50% - 100px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         padding: 15px;
         font-size: 0.9em;
     }
@@ -746,6 +756,6 @@ html {
     }
     
     .card-slider-wrapper {
-        margin: 40px 0;
+        margin: 40px auto;
     }
 }
