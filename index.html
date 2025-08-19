@@ -16,12 +16,12 @@
       <!-- Slider appears after ink animation -->
       <div class="slider-container">
         <div class="slider" style="--quantity: 6">
-          <div class="item" style="--position: 1"><img src="img/dragon_1.jpg" alt="Dragon 1"></div>
-          <div class="item" style="--position: 2"><img src="img/dragon_2.jpg" alt="Dragon 2"></div>
-          <div class="item" style="--position: 3"><img src="img/dragon_3.jpg" alt="Dragon 3"></div>
-          <div class="item" style="--position: 4"><img src="img/dragon_4.jpg" alt="Dragon 4"></div>
-          <div class="item" style="--position: 5"><img src="img/dragon_5.jpg" alt="Dragon 5"></div>
-          <div class="item" style="--position: 6"><img src="img/dragon_6.jpg" alt="Dragon 6"></div>
+          <div class="item" style="--position: 1"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 1"></div>
+          <div class="item" style="--position: 2"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 2"></div>
+          <div class="item" style="--position: 3"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 3"></div>
+          <div class="item" style="--position: 4"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 4"></div>
+          <div class="item" style="--position: 5"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 5"></div>
+          <div class="item" style="--position: 6"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 6"></div>
         </div>
         <div class="slider-content">
           <h2>ÜRÜNLERİMİZ</h2>
@@ -45,11 +45,11 @@
     <!-- About Section -->
     <section id="about" class="about-section">
       <div class="container">
-        <h2 class="section-title">Neden Nonwoven Çanta?</h2>
+        <h2 class="section-title">Neden Gopak?</h2>
         <div class="about-content">
           <div class="about-text">
             <h3>Sürdürülebilir ve Ekonomik Çözüm</h3>
-            <p>Nonwoven çantalar çok kez kullanılabilir yapısıyla plastik poşete göre uzun vadede daha hesaplı ve çevre dostu bir alternatif sunar. Dayanıklı yapısı sayesinde içki, şişe gibi ağır ürünleri güvenle taşıyabilirsiniz.</p>
+            <p>Kullandığımız Nonwoven çantalar çok kez kullanılabilir yapısıyla plastik poşete göre uzun vadede daha hesaplı ve çevre dostu bir alternatif sunar. Dayanıklı yapısı sayesinde şişe gibi ağır ürünleri güvenle taşıyabilirsiniz.</p>
             <p>Marka görünürlüğünüzü artıran bu çantalar, üzerine yapılacak özel baskılarla reklam işlevi görürken müşteri sadakatinizi de güçlendirir.</p>
             <div class="stats">
               <div class="stat-item">
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="about-image">
-            <img src="img/ink_lv1.png" alt="Ink Art">
+            <img src="img/logo_nobg.png" alt="Gopak Logo">
           </div>
         </div>
       </div>
@@ -164,8 +164,6 @@
                 <span>Tüm Siparişlerde Ücretsiz Kargo</span>
               </div>
             </div>
-            <form>
-            </form>
           </div>
         </div>
       </div>
@@ -184,25 +182,27 @@
             });
         }
 
-        // Contact form submission
+        // Contact form submission (check if form exists)
         const contactForm = document.querySelector('.contact-form form');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = contactForm.querySelector('input[type="text"]').value;
-            const email = contactForm.querySelector('input[type="email"]').value;
-            const message = contactForm.querySelector('textarea').value;
-            
-            // Simple validation
-            if (name && email && message) {
-                alert('Thank you for your message! We will get back to you soon.');
-                contactForm.reset();
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(contactForm);
+                const name = contactForm.querySelector('input[type="text"]').value;
+                const email = contactForm.querySelector('input[type="email"]').value;
+                const message = contactForm.querySelector('textarea').value;
+                
+                // Simple validation
+                if (name && email && message) {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+        }
 
         // Scroll animations
         const observerOptions = {
