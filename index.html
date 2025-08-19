@@ -77,48 +77,48 @@
     <section id="gallery" class="gallery-section">
       <div class="container">
         <h2 class="section-title">Extended Gallery</h2>
-        <div class="gallery-grid">
-          <div class="gallery-item">
-            <img src="img/dragon_1.jpg" alt="Dragon Art 1">
-            <div class="gallery-overlay">
-              <h4>Mystic Dragon</h4>
-              <p>Traditional ink on paper</p>
+        
+        <!-- Card Slider -->
+        <div class="card-slider-wrapper">
+          <div class="card-slider">
+            <div class="card-item">
+              <h1>Mystic Dragon</h1>
+              Discover the mystical world of dragon art where ancient legends come to life through ink and brush. Each stroke tells a story of power, wisdom, and the eternal dance between light and shadow.
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="img/dragon_2.jpg" alt="Dragon Art 2">
-            <div class="gallery-overlay">
-              <h4>Fire Dragon</h4>
-              <p>Digital ink animation</p>
+            <div class="card-item">
+              <h1>Fire Dragon</h1>
+              Experience the fierce beauty of fire dragons captured in digital ink animation. These pieces showcase the raw energy and passionate spirit that burns within every dragon's heart.
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="img/dragon_3.jpg" alt="Dragon Art 3">
-            <div class="gallery-overlay">
-              <h4>Water Dragon</h4>
-              <p>Mixed media artwork</p>
+            <div class="card-item">
+              <h1>Water Dragon</h1>
+              Flow with the graceful movements of water dragons in this mixed media collection. These artworks embody the fluid nature of water and the serene power of aquatic dragons.
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="img/dragon_4.jpg" alt="Dragon Art 4">
-            <div class="gallery-overlay">
-              <h4>Shadow Dragon</h4>
-              <p>Contemporary ink art</p>
+            <div class="card-item">
+              <h1>Shadow Dragon</h1>
+              Enter the realm of shadow dragons where contemporary ink art meets ancient mysticism. These pieces explore the darker aspects of dragon lore with modern artistic techniques.
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="img/dragon_5.jpg" alt="Dragon Art 5">
-            <div class="gallery-overlay">
-              <h4>Golden Dragon</h4>
-              <p>Illuminated manuscript</p>
+            <div class="card-item">
+              <h1>Golden Dragon</h1>
+              Marvel at the illuminated manuscript style golden dragons that represent prosperity and divine wisdom. Each piece is crafted with meticulous attention to traditional techniques.
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="img/dragon_6.jpg" alt="Dragon Art 6">
-            <div class="gallery-overlay">
-              <h4>Ancient Dragon</h4>
-              <p>Classical technique</p>
+            <div class="card-item">
+              <h1>Ancient Dragon</h1>
+              Journey through time with ancient dragon artworks created using classical techniques passed down through generations of master artists and ink painters.
             </div>
+            <div class="card-item">
+              <h1>Celestial Dragon</h1>
+              Ascend to the heavens with celestial dragons that bridge the gap between earthly art and divine inspiration. These pieces capture the ethereal beauty of dragons in flight.
+            </div>
+            <div class="card-item">
+              <h1>Storm Dragon</h1>
+              Feel the power of storm dragons as they command lightning and thunder through dynamic brush strokes and electric color palettes that bring tempests to life.
+            </div>
+            <div class="card-item">
+              <h1>Earth Dragon</h1>
+              Ground yourself with earth dragons that embody the strength and stability of mountains and forests. These pieces celebrate the connection between dragons and nature.
+            </div>
+            <button id="card-next">></button>
+            <button id="card-prev"><</button>
           </div>
         </div>
       </div>
@@ -220,6 +220,58 @@
             section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(section);
         });
+
+        // Card Slider Functionality
+        let cardItems = document.querySelectorAll('.card-slider .card-item');
+        let cardActive = 3;
+        
+        function loadCardShow(){
+            cardItems[cardActive].style.transform = `none`;
+            cardItems[cardActive].style.zIndex = 1;
+            cardItems[cardActive].style.filter = 'none';
+            cardItems[cardActive].style.opacity = 1;
+            
+            // show after
+            let stt = 0;
+            for(var i = cardActive + 1; i < cardItems.length; i++){
+                stt++;
+                cardItems[i].style.transform = `translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
+                cardItems[i].style.zIndex = -stt;
+                cardItems[i].style.filter = 'blur(5px)';
+                cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
+            }
+            
+            stt = 0;
+            for(var i = (cardActive - 1); i >= 0; i--){
+                stt++;
+                cardItems[i].style.transform = `translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
+                cardItems[i].style.zIndex = -stt;
+                cardItems[i].style.filter = 'blur(5px)';
+                cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
+            }
+        }
+        
+        // Initialize card slider
+        if(cardItems.length > 0) {
+            loadCardShow();
+            
+            let cardNext = document.getElementById('card-next');
+            let cardPrev = document.getElementById('card-prev');
+            
+            if(cardNext) {
+                cardNext.onclick = function(){
+                    cardActive = cardActive + 1 < cardItems.length ? cardActive + 1 : cardActive;
+                    loadCardShow();
+                }
+            }
+            
+            if(cardPrev) {
+                cardPrev.onclick = function(){
+                    cardActive = cardActive - 1 >= 0 ? cardActive - 1 : cardActive;
+                    loadCardShow();
+                }
+            }
+        }
     </script>
 </body>
 </html>

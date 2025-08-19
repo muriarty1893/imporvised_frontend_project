@@ -1,0 +1,15 @@
+# Ignore card_slider folder
+card_slider/
+
+# Common files to ignore
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+*.swp
+*.swo
+*~
