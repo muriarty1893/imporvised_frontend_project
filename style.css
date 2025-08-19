@@ -5,6 +5,18 @@ body {
     background-color: #000;
     color: #fff;
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbar */
+body::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 .banner {
     display: flex;
