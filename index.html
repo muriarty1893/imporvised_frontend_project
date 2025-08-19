@@ -272,7 +272,24 @@
           <div class="contact-form">
             <h3>Bize Ulaşın</h3>
             <p>Nonwoven çanta siparişleriniz için hemen iletişime geçin. Toptan ve perakende satış seçenekleri mevcuttur.</p>
-            <div class="contact-items" style="margin-bottom: 20px;">
+            
+            <form>
+              <div class="form-group">
+                <input type="text" name="name" placeholder="Adınız Soyadınız" required>
+              </div>
+              <div class="form-group">
+                <input type="email" name="email" placeholder="Email Adresiniz" required>
+              </div>
+              <div class="form-group">
+                <input type="tel" name="phone" placeholder="Telefon Numaranız">
+              </div>
+              <div class="form-group">
+                <textarea name="message" rows="4" placeholder="Mesajınız (Kaç adet çanta istediğinizi, özel baskı isteyip istemediğinizi belirtiniz)" required></textarea>
+              </div>
+              <button type="submit" class="submit-btn">Mesaj Gönder</button>
+            </form>
+            
+            <div class="contact-items" style="margin-top: 20px;">
               <div class="contact-item">
                 <span class="contact-icon">📱</span>
                 <span>WhatsApp: 0533 364 86 24</span>

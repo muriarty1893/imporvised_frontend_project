@@ -18,17 +18,36 @@ if (contactForm) {
         
         // Get form data
         const formData = new FormData(contactForm);
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const message = contactForm.querySelector('textarea').value;
         
-        // Simple validation
-        if (name && email && message) {
-            alert('Thank you for your message! We will get back to you soon.');
-            contactForm.reset();
-        } else {
-            alert('Please fill in all fields.');
-        }
+        // Show loading state
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Gönderiliyor...';
+        submitBtn.disabled = true;
+        
+        // Send to PHP backend
+        fetch('api/contact.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                contactForm.reset();
+            } else {
+                alert(data.message || 'Bir hata oluştu. Lütfen tekrar deneyiniz.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Bir hata oluştu. Lütfen tekrar deneyiniz.');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
     });
 }
 
