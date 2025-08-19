@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gopak - Çevre Dostu Nonwoven Çanta Çözümleri</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Model Viewer for 3D GLB files -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div class="banner" id="home">
@@ -16,12 +18,24 @@
       <!-- Slider appears after ink animation -->
       <div class="slider-container">
         <div class="slider" style="--quantity: 6">
-          <div class="item" style="--position: 1"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 1"></div>
-          <div class="item" style="--position: 2"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 2"></div>
-          <div class="item" style="--position: 3"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 3"></div>
-          <div class="item" style="--position: 4"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 4"></div>
-          <div class="item" style="--position: 5"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 5"></div>
-          <div class="item" style="--position: 6"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 6"></div>
+          <div class="item" style="--position: 1">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
+          <div class="item" style="--position: 2">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
+          <div class="item" style="--position: 3">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
+          <div class="item" style="--position: 4">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
+          <div class="item" style="--position: 5">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
+          <div class="item" style="--position: 6">
+            <model-viewer src="img/bag.glb" alt="3D Nonwoven Çanta" auto-rotate camera-controls disable-zoom></model-viewer>
+          </div>
         </div>
         <div class="slider-content">
           <h2>ÜRÜNLERİMİZ</h2>
@@ -229,7 +243,7 @@
 
         // Card Slider Functionality
         let cardItems = document.querySelectorAll('.card-slider .card-item');
-        let cardActive = 3;
+        let cardActive = 4;
         
         function loadCardShow(){
             cardItems[cardActive].style.transform = `translate(-50%, -50%)`;
