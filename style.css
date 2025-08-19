@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
 
 body {
     margin: 0;
@@ -19,7 +19,7 @@ body {
     position: relative;
 }
 .banner .content .title {
-    font-family: 'Hallowed Grounds';
+    font-family: 'Hallowed Grounds', serif;
     font-size: 9em;
 }
 .banner .content p {
@@ -164,7 +164,11 @@ body {
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .banner .content .title {
+        font-family: 'Playfair Display', 'Times New Roman', serif;
         font-size: 5em;
+        font-weight: 700;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        letter-spacing: 2px;
     }
     
     .slider {
@@ -190,7 +194,11 @@ body {
 
 @media screen and (max-width: 480px) {
     .banner .content .title {
+        font-family: 'Playfair Display', 'Times New Roman', serif;
         font-size: 3em;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        letter-spacing: 1.5px;
     }
     
     .slider {
@@ -422,6 +430,7 @@ html {
     color: #fff;
     font-size: 1.1em;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -532,6 +541,18 @@ html {
         padding: 60px 0;
     }
     
+    .container {
+        padding: 0 15px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        font-size: 1em;
+    }
+    
     .scroll-indicator {
         bottom: 20px;
     }
@@ -561,6 +582,23 @@ html {
     
     .stat-number {
         font-size: 2em;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    
+    .submit-btn {
+        padding: 12px 25px;
+        font-size: 1em;
     }
 }
 
