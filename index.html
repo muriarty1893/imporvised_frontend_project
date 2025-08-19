@@ -26,7 +26,7 @@
           <div class="item" style="--position: 6"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 6"></div>
         </div>
         <div class="slider-content">
-          <h2>ÜRÜNLERİMİZ</h2>
+          <h2>GOPAK ÇANTA</h2>
           <p>Hızlı Kargo - Toptan & Perakende</p>
         </div>
       </div>
@@ -44,41 +44,33 @@
         </div>
     </div>
 
-    <!-- About Section -->
+    <!-- Combined About & Advantages Section -->
     <section id="about" class="about-section">
       <div class="container">
         <h2 class="section-title">Neden Gopak?</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <h3>Sürdürülebilir ve Ekonomik Çözüm</h3>
-            <p>Kullandığımız Nonwoven çantalar çok kez kullanılabilir yapısıyla plastik poşete göre uzun vadede daha hesaplı ve çevre dostu bir alternatif sunar. Dayanıklı yapısı sayesinde şişe gibi ağır ürünleri güvenle taşıyabilirsiniz.</p>
-            <p>Marka görünürlüğünüzü artıran bu çantalar, üzerine yapılacak özel baskılarla reklam işlevi görürken müşteri sadakatinizi de güçlendirir.</p>
-            <div class="stats">
-              <div class="stat-item">
-                <span class="stat-number">%25</span>
-                <span class="stat-label">Müşteri Artışı</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">%40</span>
-                <span class="stat-label">Satış Artışı</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Çevre Dostu</span>
-              </div>
+        
+        <!-- Stats First -->
+        <div class="stats-section">
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-number">%100</span>
+              <span class="stat-label">Müşteri Memnuniyeti</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">%100</span>
+              <span class="stat-label">Güvenli</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Çevre Dostu</span>
             </div>
           </div>
-          <div class="about-image">
-            <img src="img/logo_nobg.png" alt="Gopak Logo">
-          </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Extended Gallery Section -->
-    <section id="gallery" class="gallery-section">
-      <div class="container">
-        <h2 class="section-title">Avantajlarımız</h2>
+        
+        <!-- Brief Description -->
+        <div class="brief-description">
+          <p>Nonwoven çantalar çok kez kullanılabilir yapısıyla plastik poşete göre uzun vadede daha hesaplı ve çevre dostu bir alternatif sunar. Marka görünürlüğünüzü artıran bu çantalar, özel baskılarla reklam işlevi görürken müşteri sadakatinizi de güçlendirir.</p>
+        </div>
         
         <!-- Card Slider -->
         <div class="card-slider-wrapper">
@@ -301,113 +293,6 @@
 
 
 
-    <script>
-        // Scroll indicator click
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        if (scrollIndicator) {
-            scrollIndicator.addEventListener('click', function() {
-                document.getElementById('about').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        }
-
-        // Contact form submission (check if form exists)
-        const contactForm = document.querySelector('.contact-form form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form data
-                const formData = new FormData(contactForm);
-                const name = contactForm.querySelector('input[type="text"]').value;
-                const email = contactForm.querySelector('input[type="email"]').value;
-                const message = contactForm.querySelector('textarea').value;
-                
-                // Simple validation
-                if (name && email && message) {
-                    alert('Thank you for your message! We will get back to you soon.');
-                    contactForm.reset();
-                } else {
-                    alert('Please fill in all fields.');
-                }
-            });
-        }
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections for scroll animations
-        document.querySelectorAll('.about-section, .gallery-section, .products-section, .testimonials-section, .contact-section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
-
-        // Card Slider Functionality
-        let cardItems = document.querySelectorAll('.card-slider .card-item');
-        let cardActive = 4;
-        
-        function loadCardShow(){
-            cardItems[cardActive].style.transform = `translate(-50%, -50%)`;
-            cardItems[cardActive].style.zIndex = 1;
-            cardItems[cardActive].style.filter = 'none';
-            cardItems[cardActive].style.opacity = 1;
-            
-            // show after
-            let stt = 0;
-            for(var i = cardActive + 1; i < cardItems.length; i++){
-                stt++;
-                cardItems[i].style.transform = `translate(-50%, -50%) translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
-                cardItems[i].style.zIndex = -stt;
-                cardItems[i].style.filter = 'blur(5px)';
-                cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
-            }
-            
-            stt = 0;
-            for(var i = (cardActive - 1); i >= 0; i--){
-                stt++;
-                cardItems[i].style.transform = `translate(-50%, -50%) translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
-                cardItems[i].style.zIndex = -stt;
-                cardItems[i].style.filter = 'blur(5px)';
-                cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
-            }
-        }
-        
-        // Initialize card slider
-        if(cardItems.length > 0) {
-            loadCardShow();
-            
-            let cardNext = document.getElementById('card-next');
-            let cardPrev = document.getElementById('card-prev');
-            
-            if(cardNext) {
-                cardNext.onclick = function(){
-                    cardActive = cardActive + 1 < cardItems.length ? cardActive + 1 : cardActive;
-                    loadCardShow();
-                }
-            }
-            
-            if(cardPrev) {
-                cardPrev.onclick = function(){
-                    cardActive = cardActive - 1 >= 0 ? cardActive - 1 : cardActive;
-                    loadCardShow();
-                }
-            }
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
