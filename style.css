@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@300;400;700&display=swap');
+
+body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+.banner .content {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+}
+.banner .content .title {
+    font-family: 'Hallowed Grounds';
+    font-size: 9em;
+}
+.banner .content p {
+    font-size: 1.5em;
+    opacity: 0.9;
+}
+.banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url(bg.jpg);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+
+    mask-image: url(ink_lv2.gif);
+    mask-size: cover;
+    mask-position: center;
+}
+
+/* Slider Container - appears after animation */
+.slider-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    animation: showSlider 1s ease-in-out 5s forwards;
+    z-index: 5;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes showSlider {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 3D Slider */
+.slider {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(-15deg);
+    animation: rotateSlider 15s linear infinite 6s;
+    margin: 0 auto 40px auto;
+}
+
+@keyframes rotateSlider {
+    from {
+        transform: perspective(1000px) rotateX(-15deg) rotateY(0deg);
+    }
+    to {
+        transform: perspective(1000px) rotateX(-15deg) rotateY(360deg);
+    }
+}
+
+.slider .item {
+    position: absolute;
+    inset: 0;
+    transform: 
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+        translateZ(300px);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.slider .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    filter: sepia(30%) saturate(1.2) brightness(0.9);
+    transition: filter 0.3s ease;
+}
+
+.slider .item:hover img {
+    filter: sepia(0%) saturate(1) brightness(1.1);
+}
+
+/* Slider Content */
+.slider-content {
+    text-align: center;
+    animation: fadeInContent 1s ease-in-out 6.5s both;
+}
+
+.slider-content h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.slider-content p {
+    font-size: 1.2em;
+    opacity: 0.8;
+    color: #ccc;
+}
+
+@keyframes fadeInContent {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hide initial content when slider appears */
+.banner .content {
+    animation: hideInitialContent 1s ease-in-out 5s forwards;
+}
+
+@keyframes hideInitialContent {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+        visibility: hidden;
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .banner .content .title {
+        font-size: 5em;
+    }
+    
+    .slider {
+        width: 150px;
+        height: 180px;
+        margin: 0 auto 30px auto;
+    }
+    
+    .slider .item {
+        transform: 
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+            translateZ(200px);
+    }
+    
+    .slider-content h2 {
+        font-size: 1.8em;
+    }
+    
+    .slider-content p {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .banner .content .title {
+        font-size: 3em;
+    }
+    
+    .slider {
+        width: 120px;
+        height: 150px;
+        margin: 0 auto 20px auto;
+    }
+    
+    .slider .item {
+        transform: 
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+            translateZ(150px);
+    }
+    
+    .slider-content h2 {
+        font-size: 1.5em;
+    }
+    
+    .slider-content p {
+        font-size: 0.9em;
+    }
+}
