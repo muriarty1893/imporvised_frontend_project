@@ -1,6 +1,6 @@
 -- Gopak E-ticaret Veritabanı Tabloları
 
--- Kullanıcılar tablosu
+-- Kullanıcılar tablosu (müşteriler için)
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -8,7 +8,6 @@ CREATE TABLE users (
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     address TEXT,
-    role ENUM('customer', 'admin') DEFAULT 'customer',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -52,15 +51,7 @@ CREATE TABLE order_items (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
--- Admin işlem kayıtları
-CREATE TABLE admin_logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    admin_id INT,
-    action VARCHAR(255) NOT NULL,
-    details TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (admin_id) REFERENCES users(id)
-);
+
 
 -- Örnek ürünler ekleme
 INSERT INTO products (name, description, price, stock_quantity, category, is_custom) VALUES
@@ -68,6 +59,4 @@ INSERT INTO products (name, description, price, stock_quantity, category, is_cus
 ('Nonwoven Çanta - Baskılı', 'Logo ve özel tasarımlarla kişiselleştirilebilir çantalar.', 4.50, 500, 'Özel', TRUE),
 ('Premium Nonwoven Çanta', 'Kalın malzeme ile üretilen premium çantalar.', 6.00, 300, 'Premium', TRUE);
 
--- Örnek admin kullanıcı ekleme (şifre: admin123)
-INSERT INTO users (email, password, name, role) VALUES
-('admin@gopak.com.tr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Gopak Admin', 'admin');
+
