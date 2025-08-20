@@ -1,5 +1,162 @@
 // Gopak Website JavaScript Functions
 
+// Lazy Loading Implementation
+class LazyLoader {
+    constructor() {
+        this.imageObserver = null;
+        this.modelObserver = null;
+        this.init();
+    }
+
+    init() {
+        // Check for Intersection Observer support
+        if ('IntersectionObserver' in window) {
+            this.setupImageObserver();
+            this.setupModelObserver();
+            this.observeImages();
+            this.observeModels();
+        } else {
+            // Fallback for older browsers
+            this.loadAllImages();
+            this.loadAllModels();
+        }
+    }
+
+    setupImageObserver() {
+        const options = {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.1
+        };
+
+        this.imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.loadImage(entry.target);
+                    this.imageObserver.unobserve(entry.target);
+                }
+            });
+        }, options);
+    }
+
+    setupModelObserver() {
+        const options = {
+            root: null,
+            rootMargin: '100px',
+            threshold: 0.1
+        };
+
+        this.modelObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.load3DModel(entry.target);
+                    this.modelObserver.unobserve(entry.target);
+                }
+            });
+        }, options);
+    }
+
+    observeImages() {
+        const lazyImages = document.querySelectorAll('.lazy-image');
+        lazyImages.forEach(img => {
+            this.imageObserver.observe(img);
+        });
+    }
+
+    observeModels() {
+        const lazyModels = document.querySelectorAll('.lazy-3d-model');
+        lazyModels.forEach(model => {
+            this.modelObserver.observe(model);
+        });
+    }
+
+    loadImage(img) {
+        const src = img.getAttribute('data-src');
+        if (!src) return;
+
+        img.onload = () => {
+            img.classList.add('loaded');
+        };
+
+        img.onerror = () => {
+            img.classList.add('loaded');
+            console.warn(`Failed to load image: ${src}`);
+        };
+
+        img.src = src;
+        img.removeAttribute('data-src');
+    }
+
+    load3DModel(model) {
+        const src = model.getAttribute('data-src');
+        if (!src) return;
+
+        model.addEventListener('load', () => {
+            model.classList.add('loaded');
+        });
+
+        model.addEventListener('error', () => {
+            model.classList.add('loaded');
+            console.warn(`Failed to load 3D model: ${src}`);
+        });
+
+        model.src = src;
+        model.removeAttribute('data-src');
+    }
+
+    loadAllImages() {
+        // Fallback for browsers without Intersection Observer
+        const lazyImages = document.querySelectorAll('.lazy-image');
+        lazyImages.forEach(img => this.loadImage(img));
+    }
+
+    loadAllModels() {
+        // Fallback for browsers without Intersection Observer
+        const lazyModels = document.querySelectorAll('.lazy-3d-model');
+        lazyModels.forEach(model => this.load3DModel(model));
+    }
+}
+
+// Initialize Lazy Loading
+const lazyLoader = new LazyLoader();
+
+// Optimize slider images (prevent duplicate loading)
+function optimizeSliderImages() {
+    const sliderImages = document.querySelectorAll('.slider .item img');
+    let masterImage = null;
+    
+    sliderImages.forEach((img, index) => {
+        if (index === 0) {
+            // First image becomes the master
+            masterImage = img;
+        } else {
+            // Other images will clone from master when it loads
+            img.style.display = 'none';
+            
+            if (masterImage.complete && masterImage.src) {
+                // Master already loaded
+                img.src = masterImage.src;
+                img.style.display = 'block';
+                img.classList.add('loaded');
+            } else {
+                // Wait for master to load
+                masterImage.addEventListener('load', () => {
+                    img.src = masterImage.src;
+                    img.style.display = 'block';
+                    img.classList.add('loaded');
+                });
+            }
+        }
+    });
+}
+
+// Call optimization after DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', optimizeSliderImages);
+} else {
+    optimizeSliderImages();
+}
+
 // Scroll indicator click
 const scrollIndicator = document.querySelector('.scroll-indicator');
 if (scrollIndicator) {

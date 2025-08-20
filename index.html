@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gopak - Çevre Dostu Nonwoven Çanta Çözümleri</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Preload critical images -->
+    <link rel="preload" href="img/main_bg.jpg" as="image">
+    <link rel="preload" href="img/ink_lv2.gif" as="image">
     <!-- Model Viewer for 3D GLB files -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
@@ -18,12 +21,12 @@
       <!-- Slider appears after ink animation -->
       <div class="slider-container">
         <div class="slider" style="--quantity: 6">
-          <div class="item" style="--position: 1"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 1"></div>
-          <div class="item" style="--position: 2"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 2"></div>
-          <div class="item" style="--position: 3"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 3"></div>
-          <div class="item" style="--position: 4"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 4"></div>
-          <div class="item" style="--position: 5"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 5"></div>
-          <div class="item" style="--position: 6"><img src="img/bag_nobg.png" alt="Nonwoven Çanta 6"></div>
+          <div class="item" style="--position: 1"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 1" class="lazy-image"></div>
+          <div class="item" style="--position: 2"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 2" class="lazy-image"></div>
+          <div class="item" style="--position: 3"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 3" class="lazy-image"></div>
+          <div class="item" style="--position: 4"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 4" class="lazy-image"></div>
+          <div class="item" style="--position: 5"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 5" class="lazy-image"></div>
+          <div class="item" style="--position: 6"><img data-src="img/bag_nobg.png" alt="Nonwoven Çanta 6" class="lazy-image"></div>
         </div>
         <div class="slider-content">
           <h2>GOPAK ÇANTA</h2>
@@ -129,7 +132,7 @@
             <div class="product-list">
               <div class="product-item">
                 <div class="product-logo">
-                  <img src="img/logo_nobg.png" alt="Gopak Logo" class="product-brand-logo">
+                  <img data-src="img/logo_nobg.png" alt="Gopak Logo" class="product-brand-logo lazy-image">
                 </div>
                 <div class="product-info">
                   <h4>Nonwoven Çanta - Baskısız</h4>
@@ -143,7 +146,7 @@
               </div>
               <div class="product-item">
                 <div class="product-logo">
-                  <img src="img/logo_nobg.png" alt="Gopak Logo" class="product-brand-logo">
+                  <img data-src="img/logo_nobg.png" alt="Gopak Logo" class="product-brand-logo lazy-image">
                 </div>
                 <div class="product-info">
                   <h4>Nonwoven Çanta - Baskılı</h4>
@@ -161,11 +164,12 @@
             <h3>3D Ürün Görünümü</h3>
             <div class="model-container">
               <model-viewer 
-                src="img/bag.glb" 
+                data-src="img/bag.glb" 
                 alt="3D Nonwoven Çanta Modeli" 
                 auto-rotate 
                 camera-controls 
                 disable-zoom
+                class="lazy-3d-model"
                 style="width: 100%; height: 400px; background-color: transparent;">
               </model-viewer>
             </div>
@@ -251,7 +255,7 @@
           <div class="contact-info">
             <h3>
               Gopak Ambalaj
-              <img src="img/logo_nobg.png" alt="Gopak Logo" class="company-logo-small">
+              <img data-src="img/logo_nobg.png" alt="Gopak Logo" class="company-logo-small lazy-image">
             </h3>
             <p>Çevre dostu nonwoven çanta üretiminde uzman firmamız, sürdürülebilir ambalaj çözümleri sunarak hem çevreye hem de işletmenize değer katıyor. Kaliteli ürünlerimiz ve hızlı teslimat hizmetimizle sektörde öncü konumdayız.</p>
             <div class="contact-items">
@@ -270,7 +274,7 @@
             </div>
           </div>
           <div class="contact-form">
-            <h3>Bize Ulaşın</h3>
+            <h3>Bize Ulaşın ve Fiyat Alın</h3>
             <p>Nonwoven çanta siparişleriniz için hemen iletişime geçin. Toptan ve perakende satış seçenekleri mevcuttur.</p>
             
             <form>
