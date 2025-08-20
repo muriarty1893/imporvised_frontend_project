@@ -5,6 +5,9 @@ gopak-website-hostinger.zip
 # Database credentials (security)
 config/database.php
 
+# Deployment documentation
+DEPLOYMENT_GUIDE.md
+
 # Hostinger specific files
 .htaccess
 cpanel-logs/
