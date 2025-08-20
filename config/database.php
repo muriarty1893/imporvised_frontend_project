@@ -1,9 +1,13 @@
 <?php
-// Veritabanı bağlantı ayarları
-$host = 'localhost';
-$dbname = 'u123456789_gopak'; // Hostinger veritabanı adı
-$username = 'u123456789_gopak'; // Hostinger kullanıcı adı
-$password = 'STRONG_PASSWORD'; // Güçlü şifre
+// Veritabanı bağlantı ayarları - Hostinger
+// Bu bilgileri hPanel > Veritabanları > MySQL Veritabanları'ndan alacaksınız
+
+$host = 'localhost'; // Genellikle localhost
+$dbname = 'u144576298_main'; // SİZİN veritabanı adınız
+$username = 'u144576298_muriarty1893'; // SİZİN kullanıcı adınız
+$password = 'Murat0133.'; // SİZİN şifreniz
+
+// NOT: Bu bilgileri hPanel'den aldıktan sonra güncelleyiniz!
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
