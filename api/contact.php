@@ -52,7 +52,7 @@ try {
     $to = 'info@gopaktr.com'; // Gerçek email adresinizi yazın
     $subject = 'Yeni İletişim Mesajı - ' . $name;
     $email_message = "
-        İsim: $name
+        Ad: $name
         Email: $email
         Telefon: $phone
         
