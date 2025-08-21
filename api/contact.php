@@ -49,7 +49,7 @@ try {
     $stmt->execute([$name, $email, $phone, $message]);
     
     // Email gönderme (opsiyonel)
-    $to = 'murateker9166@gmail.com'; // Gerçek email adresinizi yazın
+    $to = 'info@gopaktr.com'; // Gerçek email adresinizi yazın
     $subject = 'Yeni İletişim Mesajı - ' . $name;
     $email_message = "
         İsim: $name
