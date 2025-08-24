@@ -183,8 +183,9 @@ html {
         font-weight: 700;
         letter-spacing: 0.02em;
         text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 1);
-        padding: 12px 20px;
+        padding: 12px 30px;
         border-radius: 12px;
+        margin: 0 20px;
     }
     
     .slider {
@@ -232,8 +233,9 @@ html {
         letter-spacing: 0.015em;
         text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 1);
         line-height: 1.3;
-        padding: 10px 15px;
+        padding: 10px 25px;
         border-radius: 10px;
+        margin: 0 15px;
     }
     
     .slider {
@@ -407,6 +409,45 @@ html {
     font-size: 0.9em;
 }
 
+/* Custom Color Picker */
+.custom-color-option {
+    position: relative;
+}
+
+.custom-color-circle {
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.color-picker-icon {
+    font-size: 1.2em;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.hidden-color-picker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+}
+
+.custom-color-option.active .custom-color-circle {
+    border-color: #90EE90;
+    box-shadow: 0 0 15px rgba(144, 238, 144, 0.5);
+}
+
 /* Size Selection - Improved Card Slider */
 .size-slider-wrapper {
     position: relative;
@@ -436,7 +477,7 @@ html {
     cursor: pointer;
     transition: all 0.5s ease;
     text-align: center;
-    left: calc(50% - 90px);
+    left: calc(50% - 105px);
     top: 40px;
 }
 

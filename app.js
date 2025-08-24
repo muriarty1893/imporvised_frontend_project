@@ -274,8 +274,18 @@ class SalesManager {
 
     setupColorSelection() {
         const colorOptions = document.querySelectorAll('.color-option');
+        const customColorPicker = document.getElementById('customColorPicker');
+        const customColorOption = document.querySelector('.custom-color-option');
+        
         colorOptions.forEach(option => {
             option.addEventListener('click', () => {
+                if (option.classList.contains('custom-color-option')) {
+                    // Custom color option clicked
+                    customColorPicker.click();
+                    return;
+                }
+                
+                // Regular color option
                 colorOptions.forEach(opt => opt.classList.remove('active'));
                 option.classList.add('active');
                 this.config.color = option.dataset.color;
@@ -284,6 +294,74 @@ class SalesManager {
                 this.updatePricing();
             });
         });
+
+        // Custom color picker functionality
+        if (customColorPicker) {
+            customColorPicker.addEventListener('change', (e) => {
+                const selectedColor = e.target.value;
+                const colorHex = selectedColor.toUpperCase();
+                
+                // Update custom color circle to show selected color
+                const customCircle = document.querySelector('.custom-color-circle');
+                customCircle.style.background = selectedColor;
+                
+                // Set as active color
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                customColorOption.classList.add('active');
+                
+                // Update config with custom color
+                this.config.color = 'custom';
+                this.config.colorName = `Özel Renk (${colorHex})`;
+                this.config.customColor = selectedColor;
+                
+                this.updatePreview();
+                this.updatePricing();
+                
+                // Show success message
+                this.showCustomColorSuccess(colorHex);
+            });
+        }
+    }
+
+    showCustomColorSuccess(colorHex) {
+        // Simple notification for custom color selection
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #90EE90, #32CD32);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+        `;
+        notification.textContent = `🎨 Özel renk seçildi: ${colorHex}`;
+
+        document.body.appendChild(notification);
+
+        // Remove after 2 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 2000);
+
+        // Add animation styles if not already present
+        if (!document.getElementById('custom-color-animations')) {
+            const style = document.createElement('style');
+            style.id = 'custom-color-animations';
+            style.textContent = `
+                @keyframes slideDown {
+                    from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+                    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
 
     setupSizeSlider() {
