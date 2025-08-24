@@ -434,7 +434,260 @@ class SalesManager {
     }
 }
 
-// Initialize sales manager
+// Cart Management System
+class CartManager {
+    constructor() {
+        this.cart = this.loadCart();
+        this.init();
+    }
+
+    init() {
+        this.setupAddToCartButton();
+        this.updateCartDisplay();
+    }
+
+    setupAddToCartButton() {
+        const addToCartBtn = document.querySelector('.add-to-cart-btn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', () => {
+                this.addToCart();
+            });
+        }
+    }
+
+    addToCart() {
+        const salesManager = window.salesManagerInstance;
+        if (!salesManager) {
+            console.error('Sales manager not initialized');
+            return;
+        }
+
+        const config = salesManager.config;
+        const unitPrice = config.basePrice * config.sizeMultiplier;
+        const subtotal = unitPrice * config.quantity;
+        const discount = config.quantity >= 500 ? 0.1 : 0;
+        const total = subtotal * (1 - discount);
+
+        const cartItem = {
+            id: Date.now(), // Simple ID for now
+            type: config.type,
+            typeName: config.type === 'printed' ? 'Baskılı Çanta' : 'Baskısız Çanta',
+            color: config.color,
+            colorName: config.colorName,
+            size: config.size,
+            quantity: config.quantity,
+            unitPrice: unitPrice,
+            sizeMultiplier: config.sizeMultiplier,
+            subtotal: subtotal,
+            discount: discount,
+            total: total,
+            addedAt: new Date().toISOString()
+        };
+
+        this.cart.push(cartItem);
+        this.saveCart();
+        this.showAddToCartSuccess(cartItem);
+        this.updateCartDisplay();
+    }
+
+    showAddToCartSuccess(item) {
+        // Calculate safe position for notification (avoid cart button)
+        const cartButton = document.querySelector('.cart-button-wrapper');
+        const isCartVisible = cartButton && cartButton.classList.contains('visible');
+        
+        // Determine notification position based on screen size and cart button visibility
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+        let topPosition = '20px';
+        
+        if (isCartVisible) {
+            // If cart button is visible, position notification below it
+            if (isSmallMobile) {
+                topPosition = '90px'; // Smaller gap for very small screens
+            } else if (isMobile) {
+                topPosition = '100px';
+            } else {
+                topPosition = '110px';
+            }
+        } else {
+            // If cart button is not visible, use top position
+            topPosition = '20px';
+        }
+        
+        // Show temporary success notification
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: ${topPosition};
+            right: 20px;
+            background: linear-gradient(135deg, #90EE90, #32CD32);
+            color: #000;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(144, 238, 144, 0.3);
+            z-index: 999;
+            font-weight: bold;
+            max-width: ${isMobile ? '280px' : '300px'};
+            animation: slideInRight 0.3s ease;
+        `;
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.5em;">🛒</span>
+                <div>
+                    <div style="font-size: 1.1em; margin-bottom: 5px;">Sepete Eklendi!</div>
+                    <div style="font-size: 0.9em; opacity: 0.8;">
+                        ${item.quantity} adet ${item.typeName}<br>
+                        ${item.colorName} - ${item.size} cm<br>
+                        <strong>${item.total.toFixed(0)}₺</strong>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Remove notification after 4 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 4000);
+
+        // Add animation styles if not already present
+        if (!document.getElementById('cart-animations')) {
+            const style = document.createElement('style');
+            style.id = 'cart-animations';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    updateCartDisplay() {
+        // Update cart count in the UI
+        const cartCountElement = document.getElementById('cartCount');
+        if (cartCountElement) {
+            const itemCount = this.getCartItemsCount();
+            cartCountElement.textContent = itemCount;
+            cartCountElement.style.display = itemCount > 0 ? 'flex' : 'none';
+        }
+
+        // Log for debugging
+        console.log('Current cart:', this.cart);
+        console.log('Cart items count:', this.cart.length);
+        console.log('Cart total:', this.getCartTotal());
+    }
+
+    getCartTotal() {
+        return this.cart.reduce((total, item) => total + item.total, 0);
+    }
+
+    getCartItemsCount() {
+        return this.cart.reduce((count, item) => count + item.quantity, 0);
+    }
+
+    removeFromCart(itemId) {
+        this.cart = this.cart.filter(item => item.id !== itemId);
+        this.saveCart();
+        this.updateCartDisplay();
+    }
+
+    clearCart() {
+        this.cart = [];
+        this.saveCart();
+        this.updateCartDisplay();
+    }
+
+    loadCart() {
+        try {
+            const savedCart = localStorage.getItem('gopak_cart');
+            return savedCart ? JSON.parse(savedCart) : [];
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            return [];
+        }
+    }
+
+    saveCart() {
+        try {
+            localStorage.setItem('gopak_cart', JSON.stringify(this.cart));
+        } catch (error) {
+            console.error('Error saving cart:', error);
+        }
+    }
+}
+
+// Cart Button Visibility Controller
+class CartButtonController {
+    constructor() {
+        this.cartButton = document.querySelector('.cart-button-wrapper');
+        this.impactSection = document.querySelector('.impact-banner');
+        this.init();
+    }
+
+    init() {
+        if (!this.cartButton || !this.impactSection) return;
+        
+        // Hide cart button initially
+        this.cartButton.classList.remove('visible');
+        
+        // Setup scroll listener
+        this.setupScrollListener();
+        
+        // Check initial position
+        this.checkScrollPosition();
+    }
+
+    setupScrollListener() {
+        let ticking = false;
+        
+        const handleScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    this.checkScrollPosition();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+
+    checkScrollPosition() {
+        if (!this.impactSection) return;
+
+        const impactSectionTop = this.impactSection.offsetTop;
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Show cart button when user scrolls to the impact section (second section)
+        if (scrollPosition >= impactSectionTop - 100) {
+            this.cartButton.classList.add('visible');
+        } else {
+            this.cartButton.classList.remove('visible');
+        }
+    }
+}
+
+// Initialize sales manager and cart system
 document.addEventListener('DOMContentLoaded', () => {
-    new SalesManager();
+    // Initialize sales manager first
+    window.salesManagerInstance = new SalesManager();
+    
+    // Initialize cart manager
+    window.cartManagerInstance = new CartManager();
+    
+    // Initialize cart button controller
+    window.cartButtonController = new CartButtonController();
 });
