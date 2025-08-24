@@ -124,11 +124,6 @@ html {
     color: #aaa;
 }
 
-/* Remove slider-related animations since we removed the slider */
-.banner .content {
-    /* No more animation needed */
-}
-
 /* Lazy Loading Styles */
 .lazy-image {
     opacity: 0;
