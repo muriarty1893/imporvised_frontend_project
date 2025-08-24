@@ -45,13 +45,21 @@ html {
     line-height: 0.9;
 }
 .banner .content p {
-    font-family: 'Inter', 'Montserrat', sans-serif;
-    font-size: 1.4em;
-    font-weight: 400;
-    opacity: 0.95;
-    letter-spacing: 0.01em;
+    font-family: 'Montserrat', 'Inter', sans-serif;
+    font-size: 1.6em;
+    font-weight: 700;
+    opacity: 1;
+    letter-spacing: 0.03em;
     margin-top: 0.5em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 1);
+    color: #ffffff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
 }
 .banner::before {
     content: '';
@@ -102,8 +110,6 @@ html {
     transform: scale(1.05);
     filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.4));
 }
-
-
 
 .impact-description h2 {
     font-size: 2.2em;
@@ -172,6 +178,15 @@ html {
         letter-spacing: 2px;
     }
     
+    .banner .content p {
+        font-size: 1.3em;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 1);
+        padding: 12px 20px;
+        border-radius: 12px;
+    }
+    
     .slider {
         width: 150px;
         height: 180px;
@@ -209,6 +224,16 @@ html {
         line-height: 1;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         letter-spacing: 1.5px;
+    }
+    
+    .banner .content p {
+        font-size: 1.1em;
+        font-weight: 700;
+        letter-spacing: 0.015em;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 1);
+        line-height: 1.3;
+        padding: 10px 15px;
+        border-radius: 10px;
     }
     
     .slider {
