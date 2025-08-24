@@ -403,38 +403,10 @@ class SalesManager {
     }
 
     updatePreview() {
-        const bagPreview = document.getElementById('bagPreview');
-        const bagShape = bagPreview.querySelector('.bag-shape');
         const selectedType = document.getElementById('selectedType');
         const selectedSpecs = document.getElementById('selectedSpecs');
 
-        // Update bag color
-        const colorMap = {
-            white: '#ffffff',
-            black: '#000000', 
-            red: '#e74c3c',
-            blue: '#3498db',
-            green: '#27ae60',
-            yellow: '#f1c40f'
-        };
-
-        bagShape.style.background = colorMap[this.config.color] || '#ffffff';
-        
-        // Update size
-        const sizeMap = {
-            '30x40': { width: '30px', height: '40px' },
-            '35x45': { width: '35px', height: '45px' },
-            '40x50': { width: '40px', height: '50px' },
-            '50x60': { width: '50px', height: '60px' }
-        };
-
-        const size = sizeMap[this.config.size];
-        if (size) {
-            bagShape.style.width = size.width;
-            bagShape.style.height = size.height;
-        }
-
-        // Update text
+        // Update text only (bag-shape removed)
         selectedType.textContent = this.config.type === 'printed' ? 'Baskılı Çanta' : 'Baskısız Çanta';
         selectedSpecs.textContent = `${this.config.colorName} - ${this.config.size} cm`;
     }
