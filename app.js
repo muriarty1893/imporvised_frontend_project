@@ -157,11 +157,11 @@ if (document.readyState === 'loading') {
     optimizeSliderImages();
 }
 
-// Scroll indicator click
+// Scroll indicator click - updated to point to sales section
 const scrollIndicator = document.querySelector('.scroll-indicator');
 if (scrollIndicator) {
     scrollIndicator.addEventListener('click', function() {
-        document.getElementById('about').scrollIntoView({
+        document.getElementById('sales').scrollIntoView({
             behavior: 'smooth'
         });
     });
@@ -224,61 +224,245 @@ const observer = new IntersectionObserver(function(entries) {
 }, observerOptions);
 
 // Observe all sections for scroll animations
-document.querySelectorAll('.about-section, .products-section, .testimonials-section, .contact-section').forEach(section => {
+document.querySelectorAll('.impact-banner, .sales-section, .testimonials-section, .contact-section').forEach(section => {
     section.style.opacity = '0';
     section.style.transform = 'translateY(50px)';
     section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(section);
 });
 
-// Card Slider Functionality
-let cardItems = document.querySelectorAll('.card-slider .card-item');
-let cardActive = 4;
-
-function loadCardShow(){
-    cardItems[cardActive].style.transform = `translate(-50%, -50%)`;
-    cardItems[cardActive].style.zIndex = 1;
-    cardItems[cardActive].style.filter = 'none';
-    cardItems[cardActive].style.opacity = 1;
-    
-    // show after
-    let stt = 0;
-    for(var i = cardActive + 1; i < cardItems.length; i++){
-        stt++;
-        cardItems[i].style.transform = `translate(-50%, -50%) translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
-        cardItems[i].style.zIndex = -stt;
-        cardItems[i].style.filter = 'blur(5px)';
-        cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
+// Sales Functionality
+class SalesManager {
+    constructor() {
+        this.config = {
+            type: 'unprinted',
+            basePrice: 2.5,
+            color: 'white',
+            colorName: 'Beyaz',
+            size: '30x40',
+            sizeMultiplier: 1.0,
+            quantity: 100
+        };
+        this.sizeIndex = 0;
+        this.init();
     }
-    
-    stt = 0;
-    for(var i = (cardActive - 1); i >= 0; i--){
-        stt++;
-        cardItems[i].style.transform = `translate(-50%, -50%) translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
-        cardItems[i].style.zIndex = -stt;
-        cardItems[i].style.filter = 'blur(5px)';
-        cardItems[i].style.opacity = stt > 2 ? 0 : 0.6;
+
+    init() {
+        this.setupTypeSelection();
+        this.setupColorSelection();
+        this.setupSizeSlider();
+        this.setupQuantityControls();
+        // Initial config update from first card
+        this.updateConfigFromActiveCard();
+        this.updatePreview();
+        this.updatePricing();
+    }
+
+    setupTypeSelection() {
+        const typeOptions = document.querySelectorAll('.type-option');
+        typeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                typeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                this.config.type = option.dataset.type;
+                this.config.basePrice = parseFloat(option.dataset.price);
+                this.updatePreview();
+                this.updatePricing();
+            });
+        });
+    }
+
+    setupColorSelection() {
+        const colorOptions = document.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                this.config.color = option.dataset.color;
+                this.config.colorName = option.dataset.name;
+                this.updatePreview();
+                this.updatePricing();
+            });
+        });
+    }
+
+    setupSizeSlider() {
+        this.sizeCards = document.querySelectorAll('.size-card');
+        this.sizeActive = 0; // Start with first card
+        const prevBtn = document.querySelector('.size-prev');
+        const nextBtn = document.querySelector('.size-next');
+
+        // Initialize the slider
+        this.loadSizeShow();
+
+        // Add click events to cards
+        this.sizeCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                this.sizeActive = index;
+                this.loadSizeShow();
+                this.updateConfigFromCard(card);
+            });
+        });
+
+        // Navigation buttons
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                this.sizeActive = this.sizeActive + 1 < this.sizeCards.length ? this.sizeActive + 1 : this.sizeActive;
+                this.loadSizeShow();
+                this.updateConfigFromActiveCard();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                this.sizeActive = this.sizeActive - 1 >= 0 ? this.sizeActive - 1 : this.sizeActive;
+                this.loadSizeShow();
+                this.updateConfigFromActiveCard();
+            });
+        }
+    }
+
+    loadSizeShow() {
+        // Active card styling
+        this.sizeCards[this.sizeActive].style.transform = `none`;
+        this.sizeCards[this.sizeActive].style.zIndex = 1;
+        this.sizeCards[this.sizeActive].style.filter = 'none';
+        this.sizeCards[this.sizeActive].style.opacity = 1;
+        this.sizeCards[this.sizeActive].classList.add('active');
+
+        // Cards after active
+        let stt = 0;
+        for(let i = this.sizeActive + 1; i < this.sizeCards.length; i++) {
+            stt++;
+            this.sizeCards[i].style.transform = `translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
+            this.sizeCards[i].style.zIndex = -stt;
+            this.sizeCards[i].style.filter = 'blur(5px)';
+            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.6;
+            this.sizeCards[i].classList.remove('active');
+        }
+
+        // Cards before active
+        stt = 0;
+        for(let i = (this.sizeActive - 1); i >= 0; i--) {
+            stt++;
+            this.sizeCards[i].style.transform = `translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
+            this.sizeCards[i].style.zIndex = -stt;
+            this.sizeCards[i].style.filter = 'blur(5px)';
+            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.6;
+            this.sizeCards[i].classList.remove('active');
+        }
+    }
+
+    updateConfigFromActiveCard() {
+        const activeCard = this.sizeCards[this.sizeActive];
+        this.updateConfigFromCard(activeCard);
+    }
+
+    updateConfigFromCard(card) {
+        this.config.size = card.dataset.size;
+        this.config.sizeMultiplier = parseFloat(card.dataset.multiplier);
+        this.updatePreview();
+        this.updatePricing();
+    }
+
+    setupQuantityControls() {
+        const quantityInput = document.getElementById('quantity');
+        const minusBtn = document.querySelector('.qty-btn.minus');
+        const plusBtn = document.querySelector('.qty-btn.plus');
+        const presets = document.querySelectorAll('.qty-preset');
+
+        quantityInput.addEventListener('input', () => {
+            this.config.quantity = parseInt(quantityInput.value) || 100;
+            this.updatePricing();
+        });
+
+        minusBtn.addEventListener('click', () => {
+            const currentQty = parseInt(quantityInput.value) || 100;
+            const newQty = Math.max(50, currentQty - 50);
+            quantityInput.value = newQty;
+            this.config.quantity = newQty;
+            this.updatePricing();
+        });
+
+        plusBtn.addEventListener('click', () => {
+            const currentQty = parseInt(quantityInput.value) || 100;
+            const newQty = Math.min(10000, currentQty + 50);
+            quantityInput.value = newQty;
+            this.config.quantity = newQty;
+            this.updatePricing();
+        });
+
+        presets.forEach(preset => {
+            preset.addEventListener('click', () => {
+                const qty = parseInt(preset.dataset.qty);
+                quantityInput.value = qty;
+                this.config.quantity = qty;
+                this.updatePricing();
+            });
+        });
+    }
+
+    updatePreview() {
+        const bagPreview = document.getElementById('bagPreview');
+        const bagShape = bagPreview.querySelector('.bag-shape');
+        const selectedType = document.getElementById('selectedType');
+        const selectedSpecs = document.getElementById('selectedSpecs');
+
+        // Update bag color
+        const colorMap = {
+            white: '#ffffff',
+            black: '#000000', 
+            red: '#e74c3c',
+            blue: '#3498db',
+            green: '#27ae60',
+            yellow: '#f1c40f'
+        };
+
+        bagShape.style.background = colorMap[this.config.color] || '#ffffff';
+        
+        // Update size
+        const sizeMap = {
+            '30x40': { width: '30px', height: '40px' },
+            '35x45': { width: '35px', height: '45px' },
+            '40x50': { width: '40px', height: '50px' },
+            '50x60': { width: '50px', height: '60px' }
+        };
+
+        const size = sizeMap[this.config.size];
+        if (size) {
+            bagShape.style.width = size.width;
+            bagShape.style.height = size.height;
+        }
+
+        // Update text
+        selectedType.textContent = this.config.type === 'printed' ? 'Baskılı Çanta' : 'Baskısız Çanta';
+        selectedSpecs.textContent = `${this.config.colorName} - ${this.config.size} cm`;
+    }
+
+    updatePricing() {
+        const unitPrice = this.config.basePrice * this.config.sizeMultiplier;
+        const subtotal = unitPrice * this.config.quantity;
+        const discount = this.config.quantity >= 500 ? 0.1 : 0;
+        const total = subtotal * (1 - discount);
+
+        document.getElementById('unitPrice').textContent = `${unitPrice.toFixed(2)}₺`;
+        document.getElementById('totalQty').textContent = this.config.quantity.toString();
+        document.getElementById('sizeMultiplier').textContent = `x${this.config.sizeMultiplier}`;
+        document.getElementById('totalPrice').textContent = `${total.toFixed(0)}₺`;
+
+        // Update discount info visibility
+        const discountInfo = document.querySelector('.discount-info');
+        if (this.config.quantity >= 500) {
+            discountInfo.style.background = 'rgba(144, 238, 144, 0.2)';
+            discountInfo.style.borderColor = 'rgba(144, 238, 144, 0.4)';
+        } else {
+            discountInfo.style.background = 'rgba(144, 238, 144, 0.1)';
+            discountInfo.style.borderColor = 'rgba(144, 238, 144, 0.2)';
+        }
     }
 }
 
-// Initialize card slider
-if(cardItems.length > 0) {
-    loadCardShow();
-    
-    let cardNext = document.getElementById('card-next');
-    let cardPrev = document.getElementById('card-prev');
-    
-    if(cardNext) {
-        cardNext.onclick = function(){
-            cardActive = cardActive + 1 < cardItems.length ? cardActive + 1 : cardActive;
-            loadCardShow();
-        }
-    }
-    
-    if(cardPrev) {
-        cardPrev.onclick = function(){
-            cardActive = cardActive - 1 >= 0 ? cardActive - 1 : cardActive;
-            loadCardShow();
-        }
-    }
-}
+// Initialize sales manager
+document.addEventListener('DOMContentLoaded', () => {
+    new SalesManager();
+});
