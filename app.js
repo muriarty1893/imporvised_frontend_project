@@ -412,7 +412,7 @@ class SalesManager {
         });
 
         // Active card styling
-        this.sizeCards[this.sizeActive].style.transform = `none`;
+        this.sizeCards[this.sizeActive].style.transform = `translateX(-50%)`;
         this.sizeCards[this.sizeActive].style.zIndex = 1;
         this.sizeCards[this.sizeActive].style.filter = 'none';
         this.sizeCards[this.sizeActive].style.opacity = 1;
@@ -422,7 +422,7 @@ class SalesManager {
         let stt = 0;
         for(let i = this.sizeActive + 1; i < this.sizeCards.length; i++) {
             stt++;
-            this.sizeCards[i].style.transform = `translateX(${60*stt}px) scale(${1 - 0.15*stt}) perspective(16px) rotateY(-1deg)`;
+            this.sizeCards[i].style.transform = `translateX(calc(-50% + ${60*stt}px)) scale(${1 - 0.15*stt}) perspective(16px) rotateY(-1deg)`;
             this.sizeCards[i].style.zIndex = -stt;
             this.sizeCards[i].style.filter = 'blur(3px)';
             this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.7;
@@ -432,7 +432,7 @@ class SalesManager {
         stt = 0;
         for(let i = (this.sizeActive - 1); i >= 0; i--) {
             stt++;
-            this.sizeCards[i].style.transform = `translateX(${-60*stt}px) scale(${1 - 0.15*stt}) perspective(16px) rotateY(1deg)`;
+            this.sizeCards[i].style.transform = `translateX(calc(-50% + ${-60*stt}px)) scale(${1 - 0.15*stt}) perspective(16px) rotateY(1deg)`;
             this.sizeCards[i].style.zIndex = -stt;
             this.sizeCards[i].style.filter = 'blur(3px)';
             this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.7;
