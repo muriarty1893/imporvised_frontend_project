@@ -327,8 +327,8 @@ html {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    align-items: flex-start;
-    min-height: 150vh;
+    align-items: start;
+    min-height: 100vh;
     position: relative;
 }
 
@@ -339,7 +339,7 @@ html {
     border: 1px solid #e6e6e6;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     min-width: 0; /* Prevent overflow */
-    min-height: calc(100vh - 120px);
+    min-height: 120vh;
 }
 
 .config-group {
@@ -746,7 +746,6 @@ html {
     z-index: 1000;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
-    will-change: transform;
 }
 
 .order-summary h3 {
