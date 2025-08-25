@@ -366,9 +366,14 @@ class SalesManager {
 
     setupSizeSlider() {
         this.sizeCards = document.querySelectorAll('.size-card');
-        this.sizeActive = 0; // Start with first card
+        this.sizeActive = Math.min(1, this.sizeCards.length - 1); // Start with second card if available
         const prevBtn = document.querySelector('.size-prev');
         const nextBtn = document.querySelector('.size-next');
+
+        // Initialize all cards first
+        this.sizeCards.forEach((card, index) => {
+            card.classList.remove('active');
+        });
 
         // Initialize the slider
         this.loadSizeShow();
@@ -401,6 +406,11 @@ class SalesManager {
     }
 
     loadSizeShow() {
+        // Reset all cards first
+        this.sizeCards.forEach(card => {
+            card.classList.remove('active');
+        });
+
         // Active card styling
         this.sizeCards[this.sizeActive].style.transform = `none`;
         this.sizeCards[this.sizeActive].style.zIndex = 1;
@@ -408,26 +418,24 @@ class SalesManager {
         this.sizeCards[this.sizeActive].style.opacity = 1;
         this.sizeCards[this.sizeActive].classList.add('active');
 
-        // Cards after active
+        // Cards after active (right side)
         let stt = 0;
         for(let i = this.sizeActive + 1; i < this.sizeCards.length; i++) {
             stt++;
-            this.sizeCards[i].style.transform = `translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
+            this.sizeCards[i].style.transform = `translateX(${60*stt}px) scale(${1 - 0.15*stt}) perspective(16px) rotateY(-1deg)`;
             this.sizeCards[i].style.zIndex = -stt;
-            this.sizeCards[i].style.filter = 'blur(5px)';
-            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.6;
-            this.sizeCards[i].classList.remove('active');
+            this.sizeCards[i].style.filter = 'blur(3px)';
+            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.7;
         }
 
-        // Cards before active
+        // Cards before active (left side)
         stt = 0;
         for(let i = (this.sizeActive - 1); i >= 0; i--) {
             stt++;
-            this.sizeCards[i].style.transform = `translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
+            this.sizeCards[i].style.transform = `translateX(${-60*stt}px) scale(${1 - 0.15*stt}) perspective(16px) rotateY(1deg)`;
             this.sizeCards[i].style.zIndex = -stt;
-            this.sizeCards[i].style.filter = 'blur(5px)';
-            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.6;
-            this.sizeCards[i].classList.remove('active');
+            this.sizeCards[i].style.filter = 'blur(3px)';
+            this.sizeCards[i].style.opacity = stt > 2 ? 0 : 0.7;
         }
     }
 
