@@ -570,41 +570,14 @@ class CartManager {
             addedAt: new Date().toISOString()
         };
 
-        // Show order modal instead of directly adding to cart
-        this.showOrderModal(cartItem);
+        // Add to cart directly
+        this.cart.push(cartItem);
+        this.saveCart();
+        this.showAddToCartSuccess(cartItem);
+        this.updateCartDisplay();
     }
 
-    showOrderModal(cartItem) {
-        const modal = document.getElementById('orderModal');
-        const modalOrderDetails = document.getElementById('modalOrderDetails');
-        
-        // Fill order details in modal
-        modalOrderDetails.innerHTML = `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span>Ürün:</span>
-                <span>${cartItem.typeName}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span>Renk - Boyut:</span>
-                <span>${cartItem.colorName} - ${cartItem.size} cm</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span>Adet:</span>
-                <span>${cartItem.quantity}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; border-top: 1px solid #e9ecef; padding-top: 8px;">
-                <span>Toplam:</span>
-                <span style="color: #FF6000;">${cartItem.total.toFixed(0)}₺</span>
-            </div>
-        `;
-        
-        // Store cart item for later use
-        window.currentCartItem = cartItem;
-        
-        // Show modal
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
+
 
     showAddToCartSuccess(item) {
         // Calculate safe position for notification (avoid cart button)

@@ -326,6 +326,52 @@
         </div>
     </div>
 
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sipariş Bilgileri</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">İsim *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Soyisim *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Adres *</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="order-summary-modal">
+                        <h3>Sipariş Özeti</h3>
+                        <div id="modalOrderDetails"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelOrder">İptal</button>
+                        <button type="submit" class="btn-submit">Siparişi Tamamla</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js?v=2.1"></script>
     <script>
         // Cart page specific functionality
@@ -467,9 +513,67 @@
                     return;
                 }
 
-                // For now, show a placeholder message
-                // This will be replaced with actual payment integration
-                alert('Ödeme sistemi yakında kullanıma sunulacak!\n\nSiparişinizi tamamlamak için:\n📞 WhatsApp: 0533 364 86 24\n📧 Email: info@gopaktr.com');
+                // Show order modal for checkout
+                this.showOrderModal();
+            }
+
+            showOrderModal() {
+                const modal = document.getElementById('orderModal');
+                const modalOrderDetails = document.getElementById('modalOrderDetails');
+                
+                // Calculate totals for all cart items
+                const cart = this.cartManager.cart;
+                const subtotal = cart.reduce((sum, item) => sum + item.subtotal, 0);
+                const totalDiscount = cart.reduce((sum, item) => sum + (item.subtotal * item.discount), 0);
+                const total = cart.reduce((sum, item) => sum + item.total, 0);
+                
+                // Fill order details in modal
+                let orderDetailsHtml = '';
+                cart.forEach(item => {
+                    orderDetailsHtml += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; padding: 8px; background: #f8f9fa; border-radius: 6px;">
+                            <div>
+                                <strong>${item.typeName}</strong><br>
+                                <small>${item.colorName} - ${item.size} cm - ${item.quantity} adet</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <strong>${item.total.toFixed(0)}₺</strong>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                orderDetailsHtml += `
+                    <div style="border-top: 1px solid #e9ecef; padding-top: 12px; margin-top: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Ara Toplam:</span>
+                            <span>${subtotal.toFixed(0)}₺</span>
+                        </div>
+                        ${totalDiscount > 0 ? `
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>İndirim:</span>
+                                <span style="color: #FF6000;">-${totalDiscount.toFixed(0)}₺</span>
+                            </div>
+                        ` : ''}
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Kargo:</span>
+                            <span style="color: #FF6000;">Ücretsiz</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 1.1em; border-top: 1px solid #e9ecef; padding-top: 8px;">
+                            <span>Toplam:</span>
+                            <span style="color: #FF6000;">${total.toFixed(0)}₺</span>
+                        </div>
+                    </div>
+                `;
+                
+                modalOrderDetails.innerHTML = orderDetailsHtml;
+                
+                // Store cart for later use
+                window.currentCart = cart;
+                
+                // Show modal
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
             }
 
             showNotification(message, type = 'success') {
@@ -504,9 +608,142 @@
             }
         }
 
+        // Cart Order Modal Controller
+        class CartOrderModalController {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupModalEvents();
+            }
+
+            setupModalEvents() {
+                const modal = document.getElementById('orderModal');
+                const closeModal = document.getElementById('closeModal');
+                const cancelOrder = document.getElementById('cancelOrder');
+                const orderForm = document.getElementById('orderForm');
+
+                // Close modal events
+                [closeModal, cancelOrder].forEach(element => {
+                    if (element) {
+                        element.addEventListener('click', () => this.closeModal());
+                    }
+                });
+
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        this.closeModal();
+                    }
+                });
+
+                // Handle form submission
+                if (orderForm) {
+                    orderForm.addEventListener('submit', (e) => this.handleOrderSubmit(e));
+                }
+            }
+
+            closeModal() {
+                const modal = document.getElementById('orderModal');
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                
+                // Clear form
+                const form = document.getElementById('orderForm');
+                if (form) form.reset();
+            }
+
+            async handleOrderSubmit(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(e.target);
+                const cart = window.currentCart;
+                
+                if (!cart || cart.length === 0) {
+                    alert('Sepetinizde ürün bulunmuyor.');
+                    return;
+                }
+
+                // Prepare order data for multiple items
+                const orderData = {
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    phone: formData.get('phone'),
+                    email: formData.get('email'),
+                    address: formData.get('address'),
+                    cartItems: cart,
+                    totalAmount: cart.reduce((sum, item) => sum + item.total, 0)
+                };
+
+                try {
+                    // Show loading state
+                    const submitBtn = e.target.querySelector('.btn-submit');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Gönderiliyor...';
+                    submitBtn.disabled = true;
+
+                    // Simulate order processing (since PHP server is not available)
+                    console.log('Order Data:', orderData);
+                    
+                    // Generate order number
+                    const orderNumber = 'GOP-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+                    
+                    // Simulate successful order
+                    const result = {
+                        success: true,
+                        message: 'Siparişiniz başarıyla alındı!',
+                        order_number: orderNumber,
+                        total_amount: orderData.totalAmount
+                    };
+
+                    console.log('Simulated API Response:', result);
+
+                    // Store order in localStorage for demo purposes
+                    const orders = JSON.parse(localStorage.getItem('gopak_orders') || '[]');
+                    orders.push({
+                        ...orderData,
+                        order_number: orderNumber,
+                        order_date: new Date().toISOString(),
+                        status: 'pending'
+                    });
+                    localStorage.setItem('gopak_orders', JSON.stringify(orders));
+
+                    if (result.success) {
+                        // Clear cart after successful order
+                        window.cartPage.cartManager.clearCart();
+                        
+                        // Show detailed success message
+                        alert(`🎉 Siparişiniz başarıyla alındı!
+                        
+📋 Sipariş Numarası: ${orderNumber}
+💰 Toplam Tutar: ${orderData.totalAmount.toFixed(0)}₺
+📞 İletişim: 0533 364 86 24
+📧 Email: info@gopaktr.com
+
+En kısa sürede sizinle iletişime geçeceğiz.`);
+                        
+                        this.closeModal();
+                        
+                        // Redirect to thank you page or refresh cart
+                        window.cartPage.renderCart();
+                    }
+                } catch (error) {
+                    console.error('Order submission error:', error);
+                    alert('Bağlantı hatası: ' + error.message + '\n\nLütfen internet bağlantınızı kontrol edin ve tekrar deneyiniz.');
+                } finally {
+                    // Reset button state
+                    const submitBtn = e.target.querySelector('.btn-submit');
+                    submitBtn.textContent = 'Siparişi Tamamla';
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+
         // Initialize cart page when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             window.cartPage = new CartPage();
+            window.cartOrderModalController = new CartOrderModalController();
         });
     </script>
 </body>
