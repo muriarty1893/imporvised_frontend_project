@@ -766,8 +766,176 @@ class CartButtonController {
     }
 }
 
+// Header Navigation Controller
+class HeaderController {
+    constructor() {
+        this.navToggle = document.getElementById('navToggle');
+        this.navMenu = document.getElementById('navMenu');
+        this.navLinks = document.querySelectorAll('.nav-link');
+        this.customerCountElement = document.getElementById('customerCount');
+        this.visitorCountElement = document.getElementById('visitorCount');
+        this.init();
+    }
+
+    init() {
+        this.setupMobileNavigation();
+        this.setupSmoothScrolling();
+        this.setupActiveSection();
+        this.startCountAnimations();
+    }
+
+    setupMobileNavigation() {
+        if (!this.navToggle || !this.navMenu) return;
+
+        // Toggle mobile menu
+        this.navToggle.addEventListener('click', () => {
+            this.navToggle.classList.toggle('active');
+            this.navMenu.classList.toggle('active');
+            
+            // Prevent body scrolling when menu is open
+            if (this.navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on a link
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                this.navToggle.classList.remove('active');
+                this.navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!this.navToggle.contains(e.target) && !this.navMenu.contains(e.target)) {
+                this.navToggle.classList.remove('active');
+                this.navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    setupSmoothScrolling() {
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const headerHeight = document.querySelector('.main-header').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Logo click to scroll to top
+        const headerBrand = document.querySelector('.header-brand h1');
+        if (headerBrand) {
+            headerBrand.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    }
+
+    setupActiveSection() {
+        // Track which section is currently in view
+        const sections = document.querySelectorAll('section, .banner');
+        const options = {
+            rootMargin: '-80px 0px -50% 0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    if (id) {
+                        this.updateActiveLink(id);
+                    }
+                }
+            });
+        }, options);
+
+        sections.forEach(section => {
+            if (section.id) {
+                observer.observe(section);
+            }
+        });
+    }
+
+    updateActiveLink(activeId) {
+        this.navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${activeId}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    startCountAnimations() {
+        // Animate customer count
+        if (this.customerCountElement) {
+            this.animateNumber(this.customerCountElement, 2847, 2000);
+        }
+
+        // Animate visitor count
+        if (this.visitorCountElement) {
+            this.animateNumber(this.visitorCountElement, 156, 1500);
+            
+            // Update visitor count every 30 seconds with random increments
+            setInterval(() => {
+                const currentCount = parseInt(this.visitorCountElement.textContent) || 156;
+                const increment = Math.floor(Math.random() * 5) + 1; // 1-5 increment
+                this.animateNumber(this.visitorCountElement, currentCount + increment, 800);
+            }, 30000);
+        }
+    }
+
+    animateNumber(element, targetValue, duration) {
+        const startValue = parseInt(element.textContent) || 0;
+        const difference = targetValue - startValue;
+        const startTime = Date.now();
+
+        const updateNumber = () => {
+            const currentTime = Date.now();
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentValue = Math.floor(startValue + (difference * easeOutQuart));
+            
+            element.textContent = currentValue.toLocaleString();
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateNumber);
+            } else {
+                element.textContent = targetValue.toLocaleString();
+            }
+        };
+
+        requestAnimationFrame(updateNumber);
+    }
+}
+
 // Initialize sales manager and cart system
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize header controller
+    window.headerController = new HeaderController();
+    
     // Initialize sales manager first
     window.salesManagerInstance = new SalesManager();
     
