@@ -1,62 +1,52 @@
 -- Gopak E-ticaret Veritabanı Tabloları
 
--- Kullanıcılar tablosu (müşteriler için)
-CREATE TABLE users (
+-- Müşteriler tablosu (sipariş veren kişiler)
+CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    phone VARCHAR(20),
-    address TEXT,
+    phone VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Ürünler tablosu
-CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    stock_quantity INT DEFAULT 0,
-    image_url VARCHAR(500),
-    category VARCHAR(100),
-    is_custom BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Siparişler tablosu
+-- Siparişler tablosu (yeni yapı)
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    total_amount DECIMAL(10,2) NOT NULL,
-    status ENUM('pending', 'confirmed', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
-    shipping_address TEXT NOT NULL,
-    payment_status ENUM('pending', 'paid', 'failed', 'refunded') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
--- Sipariş ürünleri tablosu
-CREATE TABLE order_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    product_id INT,
+    order_number VARCHAR(50) UNIQUE NOT NULL,
+    customer_id INT NOT NULL,
+    product_type VARCHAR(100) NOT NULL,
+    product_color VARCHAR(100) NOT NULL,
+    product_size VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
-    custom_design TEXT,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    size_multiplier DECIMAL(3,1) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    discount DECIMAL(3,2) DEFAULT 0,
+    total DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'confirmed', 'production', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+-- İletişim mesajları tablosu (mevcut contact formu için)
+CREATE TABLE contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    message TEXT NOT NULL,
+    status ENUM('new', 'read', 'replied') DEFAULT 'new',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
 
--- Örnek ürünler ekleme
-INSERT INTO products (name, description, price, stock_quantity, category, is_custom) VALUES
-('Nonwoven Çanta - Baskısız', 'Sade ve temiz görünümlü çantalar. Boyutlar ayarlanabilir.', 2.50, 1000, 'Standart', FALSE),
-('Nonwoven Çanta - Baskılı', 'Logo ve özel tasarımlarla kişiselleştirilebilir çantalar.', 4.50, 500, 'Özel', TRUE),
-('Premium Nonwoven Çanta', 'Kalın malzeme ile üretilen premium çantalar.', 6.00, 300, 'Premium', TRUE);
-
+-- Örnek veri ekleme (isteğe bağlı)
+-- INSERT INTO customers (first_name, last_name, email, phone, address) VALUES
+-- ('Ahmet', 'Yılmaz', 'ahmet@example.com', '0532 123 4567', 'İstanbul, Türkiye');
 

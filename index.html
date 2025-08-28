@@ -27,7 +27,6 @@
                     <span></span>
                 </div>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="nav-link">Anasayfa</a></li>
                     <li><a href="#sales" class="nav-link">Satış</a></li>
                     <li><a href="#testimonials" class="nav-link">Yorumlar</a></li>
                     <li><a href="#contact" class="nav-link">İletişim</a></li>
@@ -47,7 +46,14 @@
                 </div>
                 <div class="visitor-count">
                     <span class="count-number" id="visitorCount">156</span>
-                    <span class="count-label">Ortalama Ziyaretçi</span>
+                    <span class="count-label">Günlük Ortalama Ziyaretçi</span>
+                </div>
+                <!-- Cart Button in Header -->
+                <div class="header-cart-button">
+                    <a href="cart.html" class="cart-button" id="cartButton">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -59,15 +65,7 @@
         <p>Bez Çanta ve Çevre Dostu Ambalaj Çözümleri</p>
       </div>
       
-      <!-- Cart Button -->
-      <div class="cart-button-wrapper">
-        <a href="cart.html" class="cart-button" id="cartButton">
-          <span class="cart-icon">🛒</span>
-          <span class="cart-count" id="cartCount">0</span>
-        </a>
-      </div>
-      
-      <div class="scroll-indicator d-xl-block d-lg-block d-none d-md-none d-sm-none">
+      <div class="scroll-indicator">
             <svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" viewBox="0 0 208.43 498.01" class="arrow-down">
                 <g id="Layer_1-2" data-name="Layer_1">
                     <g>
@@ -399,6 +397,52 @@
         </div>
       </div>
     </section>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sipariş Bilgileri</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">İsim *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Soyisim *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Adres *</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="order-summary-modal">
+                        <h3>Sipariş Özeti</h3>
+                        <div id="modalOrderDetails"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelOrder">İptal</button>
+                        <button type="submit" class="btn-submit">Siparişi Tamamla</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js?v=2.0"></script>
 </body>

@@ -570,10 +570,40 @@ class CartManager {
             addedAt: new Date().toISOString()
         };
 
-        this.cart.push(cartItem);
-        this.saveCart();
-        this.showAddToCartSuccess(cartItem);
-        this.updateCartDisplay();
+        // Show order modal instead of directly adding to cart
+        this.showOrderModal(cartItem);
+    }
+
+    showOrderModal(cartItem) {
+        const modal = document.getElementById('orderModal');
+        const modalOrderDetails = document.getElementById('modalOrderDetails');
+        
+        // Fill order details in modal
+        modalOrderDetails.innerHTML = `
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Ürün:</span>
+                <span>${cartItem.typeName}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Renk - Boyut:</span>
+                <span>${cartItem.colorName} - ${cartItem.size} cm</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Adet:</span>
+                <span>${cartItem.quantity}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; border-top: 1px solid #e9ecef; padding-top: 8px;">
+                <span>Toplam:</span>
+                <span style="color: #FF6000;">${cartItem.total.toFixed(0)}₺</span>
+            </div>
+        `;
+        
+        // Store cart item for later use
+        window.currentCartItem = cartItem;
+        
+        // Show modal
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
     }
 
     showAddToCartSuccess(item) {
@@ -931,6 +961,107 @@ class HeaderController {
     }
 }
 
+// Order Modal Controller
+class OrderModalController {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupModalEvents();
+    }
+
+    setupModalEvents() {
+        const modal = document.getElementById('orderModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelOrder = document.getElementById('cancelOrder');
+        const orderForm = document.getElementById('orderForm');
+
+        // Close modal events
+        [closeModal, cancelOrder].forEach(element => {
+            if (element) {
+                element.addEventListener('click', () => this.closeModal());
+            }
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                this.closeModal();
+            }
+        });
+
+        // Handle form submission
+        if (orderForm) {
+            orderForm.addEventListener('submit', (e) => this.handleOrderSubmit(e));
+        }
+    }
+
+    closeModal() {
+        const modal = document.getElementById('orderModal');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+        
+        // Clear form
+        const form = document.getElementById('orderForm');
+        if (form) form.reset();
+    }
+
+    async handleOrderSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const orderData = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            address: formData.get('address'),
+            cartItem: window.currentCartItem
+        };
+
+        try {
+            // Show loading state
+            const submitBtn = e.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Gönderiliyor...';
+            submitBtn.disabled = true;
+
+            // Send to backend
+            const response = await fetch('api/orders.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Add to cart after successful order
+                window.cartManagerInstance.cart.push(window.currentCartItem);
+                window.cartManagerInstance.saveCart();
+                window.cartManagerInstance.updateCartDisplay();
+
+                // Show success message
+                alert('Siparişiniz başarıyla alındı! En kısa sürede sizinle iletişime geçeceğiz.');
+                this.closeModal();
+            } else {
+                alert(result.message || 'Sipariş gönderilemedi. Lütfen tekrar deneyiniz.');
+            }
+        } catch (error) {
+            console.error('Order submission error:', error);
+            alert('Bir hata oluştu. Lütfen tekrar deneyiniz.');
+        } finally {
+            // Reset button state
+            const submitBtn = e.target.querySelector('.btn-submit');
+            submitBtn.textContent = 'Siparişi Tamamla';
+            submitBtn.disabled = false;
+        }
+    }
+}
+
 // Initialize sales manager and cart system
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize header controller
@@ -944,4 +1075,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize cart button controller
     window.cartButtonController = new CartButtonController();
+    
+    // Initialize order modal controller
+    window.orderModalController = new OrderModalController();
 });
