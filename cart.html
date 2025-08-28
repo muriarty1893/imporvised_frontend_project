@@ -683,26 +683,16 @@
                     submitBtn.textContent = 'Gönderiliyor...';
                     submitBtn.disabled = true;
 
-                    // Generate order number
-                    const orderNumber = 'GOP-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-                    
-                    // Process order successfully
-                    const result = {
-                        success: true,
-                        message: 'Siparişiniz başarıyla alındı!',
-                        order_number: orderNumber,
-                        total_amount: orderData.totalAmount
-                    };
-
-                    // Store order in localStorage for demo purposes
-                    const orders = JSON.parse(localStorage.getItem('gopak_orders') || '[]');
-                    orders.push({
-                        ...orderData,
-                        order_number: orderNumber,
-                        order_date: new Date().toISOString(),
-                        status: 'pending'
+                    // Send to real backend API
+                    const response = await fetch('api/orders.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData)
                     });
-                    localStorage.setItem('gopak_orders', JSON.stringify(orders));
+
+                    const result = await response.json();
 
                     if (result.success) {
                         // Clear cart after successful order
@@ -711,7 +701,7 @@
                         // Show detailed success message
                         alert(`🎉 Siparişiniz başarıyla alındı!
                         
-📋 Sipariş Numarası: ${orderNumber}
+📋 Sipariş Numarası: ${result.orders ? result.orders[0].order_number : 'GOP-' + Date.now()}
 💰 Toplam Tutar: ${orderData.totalAmount.toFixed(0)}₺
 📞 İletişim: 0533 364 86 24
 📧 Email: info@gopaktr.com
@@ -722,6 +712,8 @@ En kısa sürede sizinle iletişime geçeceğiz.`);
                         
                         // Redirect to thank you page or refresh cart
                         window.cartPage.renderCart();
+                    } else {
+                        alert(result.message || 'Sipariş gönderilemedi. Lütfen tekrar deneyiniz.');
                     }
                 } catch (error) {
                     console.error('Order submission error:', error);
