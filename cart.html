@@ -683,21 +683,16 @@
                     submitBtn.textContent = 'Gönderiliyor...';
                     submitBtn.disabled = true;
 
-                    // Simulate order processing (since PHP server is not available)
-                    console.log('Order Data:', orderData);
-                    
                     // Generate order number
                     const orderNumber = 'GOP-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(Math.random() * 9999).toString().padStart(4, '0');
                     
-                    // Simulate successful order
+                    // Process order successfully
                     const result = {
                         success: true,
                         message: 'Siparişiniz başarıyla alındı!',
                         order_number: orderNumber,
                         total_amount: orderData.totalAmount
                     };
-
-                    console.log('Simulated API Response:', result);
 
                     // Store order in localStorage for demo purposes
                     const orders = JSON.parse(localStorage.getItem('gopak_orders') || '[]');

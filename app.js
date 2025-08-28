@@ -672,10 +672,7 @@ class CartManager {
             cartCountElement.style.display = itemCount > 0 ? 'flex' : 'none';
         }
 
-        // Log for debugging
-        console.log('Current cart:', this.cart);
-        console.log('Cart items count:', this.cart.length);
-        console.log('Cart total:', this.getCartTotal());
+        // Update cart display
     }
 
     getCartTotal() {
