@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Gopak - Çevre Dostu Nonwoven Çanta Çözümleri | gopaktr.com</title>
     <!-- Google Fonts - Professional Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
                 </div>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#sales" class="nav-link">Bez Çanta</a></li>
-                    <li><a href="#packaging" class="nav-link">Kargo Ambalajı</a></li>
+                    <li><a href="#sales2" class="nav-link">Kargo Paketi</a></li>
                     <li><a href="#testimonials" class="nav-link">Yorumlar</a></li>
                     <li><a href="#contact" class="nav-link">İletişim</a></li>
                 </ul>
@@ -151,7 +151,8 @@
             <!-- Size Selection with Card Slider -->
             <div class="config-group">
               <h3>Boy Seçimi</h3>
-              <div class="size-slider-wrapper">
+              <!-- Desktop Card Slider -->
+              <div class="size-slider-wrapper desktop-only">
                 <div class="size-slider">
                   <div class="size-card active" data-size="30x40" data-multiplier="1.0">
                     <h4>30 x 40 cm</h4>
@@ -196,6 +197,30 @@
                   <button class="size-prev">‹</button>
                   <button class="size-next">›</button>
                 </div>
+              </div>
+              
+              <!-- Mobile Size Buttons -->
+              <div class="mobile-size-buttons mobile-only">
+                <button class="size-btn active" data-size="30x40" data-multiplier="1.0">
+                  <span class="size-title">30 x 40 cm</span>
+                  <span class="size-subtitle">Küçük Boy</span>
+                  <span class="size-price-mobile">Standart Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="35x45" data-multiplier="1.2">
+                  <span class="size-title">35 x 45 cm</span>
+                  <span class="size-subtitle">Orta Boy</span>
+                  <span class="size-price-mobile">+20% Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="40x50" data-multiplier="1.4">
+                  <span class="size-title">40 x 50 cm</span>
+                  <span class="size-subtitle">Büyük Boy</span>
+                  <span class="size-price-mobile">+40% Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="50x60" data-multiplier="1.8">
+                  <span class="size-title">50 x 60 cm</span>
+                  <span class="size-subtitle">Extra Büyük</span>
+                  <span class="size-price-mobile">+80% Fiyat</span>
+                </button>
               </div>
             </div>
 
@@ -260,47 +285,204 @@
       </div>
     </section>
 
-    <!-- Packaging Section -->
-    <section id="packaging" class="packaging-section">
+    <!-- Sales Section 2 -->
+    <section id="sales2" class="sales-section">
+      <div class="coming-soon-overlay">
+        <div class="coming-soon-text">Çok Yakında</div>
+      </div>
       <div class="container">
-        <h2 class="section-title">Kargo Ambalajı Satış Bölümü</h2>
+        <h2 class="section-title">Kargo Paketi Satış Bölümü</h2>
         
-        <div class="packaging-content">
-          <!-- Blurred Content Area -->
-          <div class="packaging-blur-container">
-            <div class="packaging-blur-overlay">
-              <div class="coming-soon-message">
-                <div class="coming-soon-icon">🚀</div>
-                <h3>Çok Yakında!</h3>
-                <p>Kargo ambalajı satışımız yakında başlayacak</p>
-                <div class="progress-indicator">
-                  <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                  </div>
-                  <span class="progress-text">Hazırlık aşamasında...</span>
+        <div class="sales-content">
+          <!-- Product Configuration -->
+          <div class="product-config">
+            
+            <!-- Bag Type Selection -->
+            <div class="config-group">
+              <h3>Çanta Tipi</h3>
+              <div class="type-selector">
+                <div class="type-option active" data-type="unprinted" data-price="2.5">
+                  <div class="type-icon">📦</div>
+                  <h4>Baskısız Çanta</h4>
+                  <p>Sade ve temiz görünüm</p>
+                  <span class="type-price">2.50₺/adet</span>
+                </div>
+                <div class="type-option" data-type="printed" data-price="4.0">
+                  <div class="type-icon">🎨</div>
+                  <h4>Baskılı Çanta</h4>
+                  <p>Logo ve özel baskı</p>
+                  <span class="type-price">4.00₺/adet</span>
                 </div>
               </div>
             </div>
-            
-            <!-- Blurred Background Content (placeholder) -->
-            <div class="packaging-placeholder">
-              <div class="placeholder-card">
-                <div class="placeholder-icon">📦</div>
-                <h4>Kargo Kutuları</h4>
-                <p>Farklı boyutlarda kargo kutuları</p>
-              </div>
-              <div class="placeholder-card">
-                <div class="placeholder-icon">🎯</div>
-                <h4>Özel Ambalaj</h4>
-                <p>Hassas ürünler için özel ambalaj</p>
-              </div>
-              <div class="placeholder-card">
-                <div class="placeholder-icon">🛡️</div>
-                <h4>Koruyucu Malzemeler</h4>
-                <p>Köpük, bubble wrap ve diğer koruyucular</p>
+
+            <!-- Color Selection -->
+            <div class="config-group">
+              <h3>Renk Seçimi</h3>
+              <div class="color-selector">
+                <div class="color-option active" data-color="white" data-name="Beyaz">
+                  <div class="color-circle" style="background: #ffffff; border: 2px solid #ddd;"></div>
+                  <span>Beyaz</span>
+                </div>
+                <div class="color-option" data-color="black" data-name="Siyah">
+                  <div class="color-circle" style="background: #000000;"></div>
+                  <span>Siyah</span>
+                </div>
+                <div class="color-option" data-color="red" data-name="Kırmızı">
+                  <div class="color-circle" style="background: #e74c3c;"></div>
+                  <span>Kırmızı</span>
+                </div>
+                <div class="color-option" data-color="blue" data-name="Mavi">
+                  <div class="color-circle" style="background: #3498db;"></div>
+                  <span>Mavi</span>
+                </div>
+                <div class="color-option" data-color="green" data-name="Yeşil">
+                  <div class="color-circle" style="background: #27ae60;"></div>
+                  <span>Yeşil</span>
+                </div>
+                <div class="color-option custom-color-option" data-color="custom" data-name="Özel Renk">
+                  <div class="color-circle custom-color-circle">
+                    <span class="color-picker-icon">🎨</span>
+                  </div>
+                  <span>Özel Renk</span>
+                  <input type="color" id="customColorPicker2" class="hidden-color-picker" value="#f1c40f">
+                </div>
               </div>
             </div>
+
+            <!-- Size Selection with Card Slider -->
+            <div class="config-group">
+              <h3>Boy Seçimi</h3>
+              <!-- Desktop Card Slider -->
+              <div class="size-slider-wrapper desktop-only">
+                <div class="size-slider">
+                  <div class="size-card active" data-size="30x40" data-multiplier="1.0">
+                    <h4>30 x 40 cm</h4>
+                    <p>Küçük Boy</p>
+                    <div class="size-features">
+                      <span class="feature-item">• Ekonomik seçim</span>
+                      <span class="feature-item">• Günlük kullanım</span>
+                      <span class="feature-item">• Hafif eşyalar</span>
+                    </div>
+                    <span class="size-price">Standart Fiyat</span>
+                  </div>
+                  <div class="size-card" data-size="35x45" data-multiplier="1.2">
+                    <h4>35 x 45 cm</h4>
+                    <p>Orta Boy</p>
+                    <div class="size-features">
+                      <span class="feature-item">• Popüler boyut</span>
+                      <span class="feature-item">• Market alışverişi</span>
+                      <span class="feature-item">• Orta hacim</span>
+                    </div>
+                    <span class="size-price">+20% Fiyat</span>
+                  </div>
+                  <div class="size-card" data-size="40x50" data-multiplier="1.4">
+                    <h4>40 x 50 cm</h4>
+                    <p>Büyük Boy</p>
+                    <div class="size-features">
+                      <span class="feature-item">• Ağır yükler</span>
+                      <span class="feature-item">• Toplu alışveriş</span>
+                      <span class="feature-item">• Dayanıklı yapı</span>
+                    </div>
+                    <span class="size-price">+40% Fiyat</span>
+                  </div>
+                  <div class="size-card" data-size="50x60" data-multiplier="1.8">
+                    <h4>50 x 60 cm</h4>
+                    <p>Extra Büyük</p>
+                    <div class="size-features">
+                      <span class="feature-item">• Maksimum kapasite</span>
+                      <span class="feature-item">• Toptan alışveriş</span>
+                      <span class="feature-item">• Premium kalite</span>
+                    </div>
+                    <span class="size-price">+80% Fiyat</span>
+                  </div>
+                  <button class="size-prev">‹</button>
+                  <button class="size-next">›</button>
+                </div>
+              </div>
+              
+              <!-- Mobile Size Buttons -->
+              <div class="mobile-size-buttons mobile-only">
+                <button class="size-btn active" data-size="30x40" data-multiplier="1.0">
+                  <span class="size-title">30 x 40 cm</span>
+                  <span class="size-subtitle">Küçük Boy</span>
+                  <span class="size-price-mobile">Standart Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="35x45" data-multiplier="1.2">
+                  <span class="size-title">35 x 45 cm</span>
+                  <span class="size-subtitle">Orta Boy</span>
+                  <span class="size-price-mobile">+20% Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="40x50" data-multiplier="1.4">
+                  <span class="size-title">40 x 50 cm</span>
+                  <span class="size-subtitle">Büyük Boy</span>
+                  <span class="size-price-mobile">+40% Fiyat</span>
+                </button>
+                <button class="size-btn" data-size="50x60" data-multiplier="1.8">
+                  <span class="size-title">50 x 60 cm</span>
+                  <span class="size-subtitle">Extra Büyük</span>
+                  <span class="size-price-mobile">+80% Fiyat</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quantity Selection -->
+            <div class="config-group">
+              <h3>Adet Seçimi</h3>
+              <div class="quantity-selector">
+                <button class="qty-btn minus">-</button>
+                <input type="number" id="quantity2" value="100" min="50" max="10000" step="50">
+                <button class="qty-btn plus">+</button>
+                <div class="qty-presets">
+                  <button class="qty-preset" data-qty="100">100</button>
+                  <button class="qty-preset" data-qty="250">250</button>
+                  <button class="qty-preset" data-qty="500">500</button>
+                  <button class="qty-preset" data-qty="1000">1000</button>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          <!-- Order Summary -->
+          <div class="order-summary">
+            <h3>Sipariş Özeti</h3>
+            <div class="summary-card">
+              <div class="product-preview">
+                <div class="preview-details">
+                  <h4 id="selectedType2">Baskısız Çanta</h4>
+                  <p id="selectedSpecs2">Beyaz - 30x40 cm</p>
+                </div>
+              </div>
+              
+              <div class="price-breakdown">
+                <div class="price-row">
+                  <span>Birim Fiyat:</span>
+                  <span id="unitPrice2">2.50₺</span>
+                </div>
+                <div class="price-row">
+                  <span>Adet:</span>
+                  <span id="totalQty2">100</span>
+                </div>
+                <div class="price-row">
+                  <span>Boy Çarpanı:</span>
+                  <span id="sizeMultiplier2">x1.0</span>
+                </div>
+                <div class="price-row total">
+                  <span>Toplam Tutar:</span>
+                  <span id="totalPrice2">250₺</span>
+                </div>
+              </div>
+
+              <div class="discount-info">
+                <p>📦 500+ adet siparişlerde %10 indirim</p>
+                <p>🚚 Tüm siparişlerde ücretsiz kargo</p>
+              </div>
+
+              <button class="add-to-cart-btn">Sepete Ekle</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

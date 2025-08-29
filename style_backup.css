@@ -8,9 +8,6 @@ body {
     overflow-x: hidden;
     line-height: 1.5;
     padding-top: 80px; /* Account for fixed header */
-    width: 100vw;
-    max-width: 100vw;
-    box-sizing: border-box;
 }
 
 /* Header Styles */
@@ -25,10 +22,6 @@ body {
     border-bottom: 1px solid rgba(255, 96, 0, 0.1);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    overflow: hidden;
-    width: 100vw;
-    max-width: 100vw;
-    box-sizing: border-box;
 }
 
 .header-container {
@@ -41,10 +34,6 @@ body {
     height: 80px;
     position: relative;
     gap: 20px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
 }
 
 /* Header Brand */
@@ -55,9 +44,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    max-width: 200px;
-    width: 200px;
-    overflow: hidden;
 }
 
 .header-brand h1 {
@@ -270,47 +256,27 @@ body {
     
     .header-container {
         height: 70px;
-        padding: 0 10px;
+        padding: 0 15px;
         gap: 10px;
-        max-width: 100vw;
-        width: 100vw;
-        justify-content: space-between;
-        overflow: hidden;
-        box-sizing: border-box;
     }
     
     .header-nav {
-        display: none;
+        flex: 0 0 auto;
     }
     
     .header-brand {
         flex: 1;
         text-align: center;
-        position: static;
-        transform: none;
-        left: auto;
-        max-width: 50vw;
-        width: 50vw;
-        overflow: hidden;
     }
     
     .header-brand h1 {
-        font-size: 1.4em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        width: 100%;
-        display: block;
+        font-size: 1.8em;
     }
     
-    .header-cart {
-        flex: 0 0 auto;
-    }
-    
-    /* Hide hamburger menu on mobile */
+    /* Show hamburger menu */
     .nav-toggle {
-        display: none;
+        display: flex;
+        z-index: 1001;
     }
     
     /* Hide normal menu by default on mobile */
@@ -338,11 +304,6 @@ body {
         -ms-overflow-style: none;
         transform: translateY(-100%);
         opacity: 0;
-    }
-    
-    /* Hide all navigation buttons on mobile */
-    .nav-menu li {
-        display: none;
     }
     
     .nav-menu::-webkit-scrollbar {
@@ -374,7 +335,25 @@ body {
         overflow: hidden;
     }
     
-
+    .nav-menu li {
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 96, 0, 0.1);
+        padding-bottom: 10px;
+        opacity: 0;
+        animation: fadeInUp 0.3s ease forwards;
+    }
+    
+    .nav-menu li:nth-child(1) { animation-delay: 0.1s; }
+    .nav-menu li:nth-child(2) { animation-delay: 0.2s; }
+    .nav-menu li:nth-child(3) { animation-delay: 0.3s; }
+    .nav-menu li:nth-child(4) { animation-delay: 0.4s; }
+    
+    .nav-menu li:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
     
     @keyframes fadeInUp {
         from {
@@ -521,104 +500,7 @@ body {
         outline-offset: 2px;
     }
     
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible {
-        outline: 2px solid #FF6000;
-        outline-offset: 2px;
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus {
+
         background: rgba(0, 0, 0, 0.6);
     }
     
@@ -737,6 +619,126 @@ body {
         background: rgba(0, 0, 0, 0.8);
     }
     
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Mobile menu close on backdrop click */
+    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
     .header-stats {
         gap: 15px;
     }
@@ -748,8 +750,8 @@ body {
     }
     
     .header-cart-button .cart-button {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
     
     .header-cart-button .cart-count {
@@ -762,7 +764,6 @@ body {
     
     .header-cart {
         flex: 0 0 auto;
-        min-width: 40px;
     }
     
     .header-cart-button .cart-icon {
@@ -779,33 +780,17 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-    body {
-        padding-top: 65px;
-    }
-    
     .header-container {
-        padding: 0 8px;
-        gap: 8px;
-        height: 65px;
-        max-width: 100vw;
-        width: 100vw;
-        overflow: hidden;
-        box-sizing: border-box;
+        padding: 0 10px;
+        gap: 5px;
     }
     
     .header-brand h1 {
-        font-size: 1em;
-        letter-spacing: 0.02em;
-        max-width: 100%;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
+        font-size: 1.5em;
     }
     
     .nav-toggle {
         padding: 8px;
-        min-width: 40px;
     }
     
     .nav-toggle span {
@@ -825,28 +810,28 @@ body {
     }
     
     .count-number {
-        font-size: 0.9em;
+        font-size: 1em;
     }
     
     .count-label {
-        font-size: 0.6em;
+        font-size: 0.65em;
     }
     
     .header-cart-button .cart-button {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
     }
     
     .header-cart-button .cart-icon {
-        font-size: 0.9em;
+        font-size: 1em;
     }
     
     .header-cart-button .cart-count {
-        width: 14px;
-        height: 14px;
-        font-size: 0.6em;
-        top: -3px;
-        right: -3px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.65em;
+        top: -4px;
+        right: -4px;
     }
 }
 
@@ -1131,6 +1116,17 @@ html {
     min-height: 120vh;
 }
 
+.sales-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, rgba(255, 96, 0, 0.05), transparent);
+    border-radius: 50%;
+    z-index: 1;
+}
 
 .sales-section::after {
     content: '';
@@ -1402,15 +1398,6 @@ html {
 .custom-color-option.active .custom-color-circle {
     border-color: #FF6000;
     box-shadow: 0 0 8px rgba(255, 96, 0, 0.3);
-}
-
-/* Desktop/Mobile Visibility Classes */
-.desktop-only {
-    display: block;
-}
-
-.mobile-only {
-    display: none;
 }
 
 /* Size Selection - Improved Card Slider */
@@ -2112,73 +2099,22 @@ html {
         gap: 10px;
     }
     
-    /* Desktop/Mobile Visibility - Mobile */
-    .desktop-only {
-        display: none;
+    .size-slider-wrapper {
+        height: 250px;
     }
     
-    .mobile-only {
-        display: block;
+    .size-card {
+        width: 160px;
+        height: 200px;
+        padding: 15px;
+        left: calc(50% - 80px);
+        top: 25px;
     }
     
-    /* Mobile Size Buttons */
-    .mobile-size-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin: 20px 0;
-    }
-    
-    .size-btn {
-        background: #ffffff;
-        border: 2px solid #e0e0e0;
-        border-radius: 12px;
-        padding: 15px 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        min-height: 80px;
-        justify-content: center;
-    }
-    
-    .size-btn.active {
-        border-color: #FF6000;
-        background: rgba(255, 96, 0, 0.05);
-        box-shadow: 0 4px 15px rgba(255, 96, 0, 0.2);
-    }
-    
-    .size-btn:hover {
-        border-color: #FF6000;
-        background: rgba(255, 96, 0, 0.1);
-        transform: translateY(-2px);
-    }
-    
-    .size-title {
-        font-size: 0.9em;
-        font-weight: 700;
-        color: #333333;
-        line-height: 1.2;
-    }
-    
-    .size-subtitle {
-        font-size: 0.8em;
-        color: #666666;
-        font-weight: 500;
-    }
-    
-    .size-price-mobile {
-        font-size: 0.75em;
-        color: #FF6000;
-        font-weight: 600;
-        margin-top: 2px;
-    }
-    
-    .size-btn.active .size-title,
-    .size-btn.active .size-price-mobile {
-        color: #FF6000;
+    .size-prev, .size-next {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5em;
     }
     
     .quantity-selector {

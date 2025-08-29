@@ -1032,6 +1032,54 @@ class OrderModalController {
     }
 }
 
+// Mobile Size Button Handler
+class MobileSizeButtonHandler {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupMobileSizeButtons();
+    }
+
+    setupMobileSizeButtons() {
+        const mobileSizeButtons = document.querySelectorAll('.size-btn');
+        
+        mobileSizeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                mobileSizeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Update configuration
+                const size = button.dataset.size;
+                const multiplier = parseFloat(button.dataset.multiplier);
+                
+                // Update sales manager config if it exists
+                if (window.salesManagerInstance) {
+                    window.salesManagerInstance.config.size = size;
+                    window.salesManagerInstance.config.sizeMultiplier = multiplier;
+                    window.salesManagerInstance.updatePreview();
+                    window.salesManagerInstance.updatePricing();
+                }
+                
+                // Also update desktop size cards to keep them in sync
+                const desktopCards = document.querySelectorAll('.size-card');
+                desktopCards.forEach((card, index) => {
+                    if (card.dataset.size === size) {
+                        // Remove active from all cards
+                        desktopCards.forEach(c => c.classList.remove('active'));
+                        // Add active to matching card
+                        card.classList.add('active');
+                    }
+                });
+            });
+        });
+    }
+}
+
 // Initialize sales manager and cart system
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize header controller
@@ -1048,4 +1096,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize order modal controller
     window.orderModalController = new OrderModalController();
+    
+    // Initialize mobile size button handler
+    window.mobileSizeButtonHandler = new MobileSizeButtonHandler();
 });
