@@ -274,7 +274,7 @@ body {
         gap: 10px;
         max-width: 100vw;
         width: 100vw;
-        justify-content: space-between;
+        justify-content: center;
         overflow: hidden;
         box-sizing: border-box;
     }
@@ -289,8 +289,8 @@ body {
         position: static;
         transform: none;
         left: auto;
-        max-width: 50vw;
-        width: 50vw;
+        max-width: none;
+        width: auto;
         overflow: hidden;
     }
     
@@ -305,7 +305,10 @@ body {
     }
     
     .header-cart {
-        flex: 0 0 auto;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
     }
     
     /* Hide hamburger menu on mobile */
@@ -789,6 +792,7 @@ body {
         height: 65px;
         max-width: 100vw;
         width: 100vw;
+        justify-content: center;
         overflow: hidden;
         box-sizing: border-box;
     }
@@ -847,6 +851,13 @@ body {
         font-size: 0.6em;
         top: -3px;
         right: -3px;
+    }
+    
+    .header-cart {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 
