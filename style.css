@@ -161,6 +161,47 @@ body {
     gap: 25px;
 }
 
+/* Header Admin Link */
+.header-admin-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-admin-link .admin-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f8f9fa;
+    border: 1px solid #e6e6e6;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.header-admin-link .admin-link:hover {
+    background: #FF6000;
+    border-color: #FF6000;
+    transform: scale(1.05);
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(255, 96, 0, 0.15);
+}
+
+.header-admin-link .admin-icon {
+    font-size: 1.1em;
+    color: #666666;
+    transition: color 0.2s ease;
+}
+
+.header-admin-link .admin-link:hover .admin-icon {
+    color: #ffffff;
+}
+
 /* Header Stats (legacy - now used in testimonials) */
 .header-stats {
     flex: 1;
@@ -309,6 +350,16 @@ body {
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
+        gap: 15px;
+    }
+    
+    .header-admin-link .admin-link {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .header-admin-link .admin-icon {
+        font-size: 1em;
     }
     
     /* Hide hamburger menu on mobile */
@@ -575,170 +626,7 @@ body {
         background: rgba(0, 0, 0, 0.8);
     }
     
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus {
-        background: rgba(0, 0, 0, 0.6);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:hover {
-        background: rgba(0, 0, 0, 0.7);
-    }
-    
-    /* Mobile menu close on backdrop click */
-    .nav-menu-backdrop.active:focus-within:focus-visible:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:focus:active {
-        background: rgba(0, 0, 0, 0.8);
-    }
+
     
     .header-stats {
         gap: 15px;
