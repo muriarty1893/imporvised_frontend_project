@@ -8,7 +8,8 @@
 
 # admin.html'e erişim denendiğinde login sayfasına yönlendir
 RewriteEngine On
-RewriteRule ^admin\.html$ admin_login.php [L,R=302]
+RewriteCond %{REQUEST_URI} ^/admin\.html$
+RewriteRule ^admin\.html$ /admin_login.php [L,R=302]
 
 # PHP dosyalarına doğrudan erişimi engelle (güvenlik için)
 <Files "*.php">
