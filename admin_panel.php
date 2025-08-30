@@ -1073,11 +1073,10 @@ $admin_role = $_SESSION['admin_role'] ?? 'admin';
                 } else {
                     throw new Error('Ürün güncellenemedi');
                 }
-            } catch (error) {
-                console.error('Ürün güncelleme hatası:', error);
-                error);
-                alert('Ürün güncellenirken hata oluştu: ' + error.message);
-            }
+                    } catch (error) {
+            console.error('Ürün güncelleme hatası:', error);
+            alert('Ürün güncellenirken hata oluştu: ' + error.message);
+        }
         });
         
         async function deleteProduct(productId) {
