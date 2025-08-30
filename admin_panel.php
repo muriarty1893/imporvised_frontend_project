@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Admin giriş kontrolü
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: admin_login.php');
+    exit();
+}
+
+// Admin bilgilerini al
+$admin_username = $_SESSION['admin_username'] ?? 'Admin';
+$admin_role = $_SESSION['admin_role'] ?? 'admin';
+?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -361,6 +374,42 @@
             font-size: 1em;
         }
         
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 0.9em;
+        }
+        
+        .user-info .username {
+            font-weight: 600;
+            color: #FF6000;
+        }
+        
+        .user-info .role {
+            color: #666;
+            font-size: 0.8em;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
         @media (max-width: 768px) {
             .admin-nav {
                 flex-direction: column;
@@ -384,12 +433,25 @@
                 flex-direction: column;
                 gap: 4px;
             }
+            
+            .user-info {
+                position: static;
+                margin-bottom: 20px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="admin-section">
         <div class="admin-container">
+            <!-- Kullanıcı Bilgileri -->
+            <div class="user-info">
+                <span class="username"><?php echo htmlspecialchars($admin_username); ?></span>
+                <span class="role">(<?php echo htmlspecialchars($admin_role); ?>)</span>
+                <button class="logout-btn" onclick="logout()">Çıkış</button>
+            </div>
+            
             <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
             
             <div class="admin-header">
@@ -587,6 +649,26 @@
         let orders = [];
         let customers = [];
         let products = [];
+        
+        // Logout function
+        async function logout() {
+            try {
+                const response = await fetch('api/admin_logout.php', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        window.location.href = result.redirect;
+                    }
+                }
+            } catch (error) {
+                console.error('Çıkış hatası:', error);
+                // Hata olsa bile login sayfasına yönlendir
+                window.location.href = 'admin_login.php';
+            }
+        }
         
         // Navigation
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -991,10 +1073,10 @@
                 } else {
                     throw new Error('Ürün güncellenemedi');
                 }
-            } catch (error) {
-                console.error('Ürün güncelleme hatası:', error);
-                alert('Ürün güncellenirken hata oluştu: ' + error.message);
-            }
+                    } catch (error) {
+            console.error('Ürün güncelleme hatası:', error);
+            alert('Ürün güncellenirken hata oluştu: ' + error.message);
+        }
         });
         
         async function deleteProduct(productId) {
