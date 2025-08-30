@@ -17,3 +17,5 @@ This project is a website developed for a nonwoven bag manufacturer for customer
 ## License
 
 MIT License
+
+auto deployment test
