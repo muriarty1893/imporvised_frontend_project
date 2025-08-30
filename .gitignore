@@ -9,7 +9,7 @@ config/database.php
 DEPLOYMENT_GUIDE.md
 
 # Hostinger specific files
-.htaccess
+
 cpanel-logs/
 error_logs/
 tmp/

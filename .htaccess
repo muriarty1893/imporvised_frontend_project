@@ -1,0 +1,33 @@
+# Admin Panel Güvenlik Kuralları
+
+# admin.html dosyasına doğrudan erişimi engelle
+<Files "admin.html">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# admin.html'e erişim denendiğinde login sayfasına yönlendir
+RewriteEngine On
+RewriteRule ^admin\.html$ admin_login.php [L,R=302]
+
+# PHP dosyalarına doğrudan erişimi engelle (güvenlik için)
+<Files "*.php">
+    <RequireAll>
+        Require all granted
+    </RequireAll>
+</Files>
+
+# Güvenlik başlıkları
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Dizin listelemesini kapat
+Options -Indexes
+
+# Hata sayfaları
+ErrorDocument 403 /admin_login.php
+ErrorDocument 404 /index.html

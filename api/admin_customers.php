@@ -5,6 +5,10 @@ header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once '../config/database.php';
+require_once '../admin_auth.php';
+
+// Admin kimlik doğrulaması (tüm işlemler için)
+checkAdminAuth();
 
 // GET: Tüm müşterileri getir
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {

@@ -5,6 +5,12 @@ header('Access-Control-Allow-Methods: GET, PUT, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once '../config/database.php';
+require_once '../admin_auth.php';
+
+// Admin kimlik doğrulaması (GET hariç tüm işlemler için)
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    checkAdminAuth();
+}
 
 // GET: Tüm siparişleri getir
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
