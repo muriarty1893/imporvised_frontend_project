@@ -1,0 +1,11 @@
+# Güvenlik: .env dosyalarına doğrudan erişimi engelle
+<Files "*.env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# PHP dosyalarını çalıştırmaya izin ver
+<Files "*.php">
+    Order allow,deny
+    Allow from all
+</Files>
