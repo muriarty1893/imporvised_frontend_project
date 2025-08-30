@@ -3,7 +3,7 @@ session_start();
 
 // Eğer zaten giriş yapılmışsa admin paneline yönlendir
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header('Location: admin.html');
+    header('Location: admin_panel.php');
     exit();
 }
 
@@ -25,14 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Giriş başarılı
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_username'] = $admin['username'];
+                $_SESSION['admin_username'] = $admin['id'];
                 $_SESSION['admin_role'] = $admin['role'];
                 
                 // Son giriş zamanını güncelle
                 $updateStmt = $pdo->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = ?");
                 $updateStmt->execute([$admin['id']]);
                 
-                header('Location: admin.html');
+                header('Location: admin_panel.php'); 
                 exit();
             } else {
                 $error = "Kullanıcı adı veya şifre hatalı!";
